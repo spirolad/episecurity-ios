@@ -1,0 +1,107 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="mnNzJTUTLGpEZwczXKOu">
+    <mxGraphModel dx="1003" dy="604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_EIc4QTMogttURwYKELA-11" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=none;fillStyle=hatch;verticalAlign=top;" value="Internal&lt;div&gt;network&lt;/div&gt;" vertex="1">
+          <mxGeometry height="530" width="340" x="400" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-27" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-28" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-29" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-18">
+          <mxGeometry relative="1" x="0.0021" as="geometry">
+            <Array as="points">
+              <mxPoint x="378.3" y="340" />
+              <mxPoint x="440" y="340" />
+              <mxPoint x="440" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;" value="App IOS" vertex="1">
+          <mxGeometry height="80" width="80" x="310" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-34" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-4" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-35" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;" value="Postgres" vertex="1">
+          <mxGeometry height="80" width="80" x="630" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-25" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-6" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelPerimeter=1;" value="User" vertex="1">
+          <mxGeometry height="60" width="30" x="40" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-20" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-7" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelPerimeter=1;" value="Manager" vertex="1">
+          <mxGeometry height="60" width="30" x="40" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-22" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;" value="Auth Service" vertex="1">
+          <mxGeometry height="80" width="80" x="160" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-24" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-14" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelPerimeter=1;" value="Admin" vertex="1">
+          <mxGeometry height="60" width="30" x="40" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-38" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-15" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-41" connectable="0" parent="_EIc4QTMogttURwYKELA-38" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="Analyse" vertex="1">
+          <mxGeometry relative="1" x="0.0111" y="2" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-15" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;" value="&quot;Private&quot; chat service" vertex="1">
+          <mxGeometry height="80" width="80" x="470" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-31" edge="1" parent="1" style="edgeStyle=elbowEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;elbow=vertical;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="550" y="320" as="sourcePoint" />
+            <mxPoint x="630" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-16" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;" value="Report service" vertex="1">
+          <mxGeometry height="80" width="80" x="470" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-32" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-18" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-18" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;" value="User gestion Service" vertex="1">
+          <mxGeometry height="80" width="80" x="470" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-26" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;innerLoopWaypoints=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-8">
+          <mxGeometry relative="1" x="-0.4167" as="geometry">
+            <Array as="points">
+              <mxPoint x="270" y="240" />
+              <mxPoint x="270" y="150" />
+              <mxPoint x="200" y="150" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-39" edge="1" parent="1" source="_EIc4QTMogttURwYKELA-37" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="_EIc4QTMogttURwYKELA-4" value="">
+          <mxGeometry relative="1" x="0.2" y="19" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_EIc4QTMogttURwYKELA-37" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;" value="IA" vertex="1">
+          <mxGeometry height="80" width="80" x="590" y="150" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
