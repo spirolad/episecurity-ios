@@ -1,0 +1,165 @@
+package com.episecurity.epibrother.service;
+
+import com.episecurity.epibrother.ai.AiAnalysisResult;
+import com.episecurity.epibrother.ai.AiAnalysisService;
+import com.episecurity.epibrother.dto.request.SendMessageRequest;
+import com.episecurity.epibrother.dto.response.MessageResponse;
+import com.episecurity.epibrother.model.entity.Message;
+import com.episecurity.epibrother.model.entity.Signalement;
+import com.episecurity.epibrother.model.entity.User;
+import com.episecurity.epibrother.model.enums.RoleType;
+import com.episecurity.epibrother.repository.MessageRepository;
+import com.episecurity.epibrother.repository.SignalementRepository;
+import com.episecurity.epibrother.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class MessageService {
+
+    private static final Logger log = LoggerFactory.getLogger(MessageService.class);
+
+    private final MessageRepository messageRepository;
+    private final UserRepository userRepository;
+    private final SignalementRepository signalementRepository;
+    private final AiAnalysisService aiAnalysisService;
+
+    public MessageService(MessageRepository messageRepository,
+                          UserRepository userRepository,
+                          SignalementRepository signalementRepository,
+                          AiAnalysisService aiAnalysisService) {
+        this.messageRepository = messageRepository;
+        this.userRepository = userRepository;
+        this.signalementRepository = signalementRepository;
+        this.aiAnalysisService = aiAnalysisService;
+    }
+
+    @Transactional
+    public MessageResponse sendMessage(SendMessageRequest request, String currentUsername) {
+        User sender;
+
+        if (currentUsername != null && !currentUsername.isBlank()) {
+            User currentUser = userRepository.findByUsername(currentUsername)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur courant introuvable: " + currentUsername));
+
+            // Si l'utilisateur n'est pas ADMIN et qu'un senderId différent a été spécifié -> refus
+            if (request.getSenderId() != null && !request.getSenderId().equals(currentUser.getId()) && currentUser.getRole() != RoleType.ADMIN) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Interdiction d'usurper l'identité d'un autre utilisateur.");
+            }
+
+            // Pour un employé, il doit obligatoirement envoyer le message à une personne (destinataire obligatoire)
+            if (currentUser.getRole() == RoleType.EMPLOYEE && request.getRecipientId() == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Un employé doit obligatoirement spécifier un destinataire.");
+            }
+
+            sender = (request.getSenderId() != null && currentUser.getRole() == RoleType.ADMIN)
+                    ? userRepository.findById(request.getSenderId()).orElse(currentUser)
+                    : currentUser;
+        } else {
+            // Cas sans utilisateur authentifié explicite (fallback/tests)
+            if (request.getSenderId() == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "senderId obligatoire");
+            }
+            sender = userRepository.findById(request.getSenderId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Expéditeur introuvable avec l'id: " + request.getSenderId()));
+        }
+
+        User recipient = null;
+        if (request.getRecipientId() != null) {
+            recipient = userRepository.findById(request.getRecipientId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Destinataire introuvable avec l'id: " + request.getRecipientId()));
+        }
+
+        // 1. Sauvegarde du message
+        Message message = new Message(sender, recipient, request.getContent());
+        Message savedMessage = messageRepository.save(message);
+        log.info("Message id={} enregistré avec succès (expéditeur: {})", savedMessage.getId(), sender.getUsername());
+
+        // 2. Analyse IA du message (vérification présence 'Epita' ou modèle NLP)
+        AiAnalysisResult analysisResult = aiAnalysisService.analyze(savedMessage.getContent());
+
+        // 3. Si l'IA détecte une infraction, créer automatiquement un signalement pour les managers
+        boolean flagged = analysisResult.isFlagged();
+        if (flagged) {
+            Signalement signalement = new Signalement(
+                    savedMessage,
+                    analysisResult.getReason(),
+                    analysisResult.getSeverity(),
+                    "PENDING"
+            );
+            Signalement savedSignalement = signalementRepository.save(signalement);
+            Long signalementId = savedSignalement != null ? savedSignalement.getId() : null;
+            log.warn("🚨 SIGNALEMENT créé avec succès (id={}) pour le message id={} !",
+                    signalementId, savedMessage.getId());
+        }
+
+        return MessageResponse.fromEntity(savedMessage, flagged);
+    }
+
+    public MessageResponse sendMessage(SendMessageRequest request) {
+        return sendMessage(request, null);
+    }
+
+    /**
+     * Récupère les messages autorisés :
+     * - Si EMPLOYEE : UNIQUEMENT les messages dont il est la cible (destinataire)
+     * - Si ADMIN ou MANAGER : tous les messages
+     */
+    public List<MessageResponse> getAuthorizedMessages(String currentUsername) {
+        if (currentUsername == null || currentUsername.isBlank()) {
+            return getAllMessages();
+        }
+
+        User currentUser = userRepository.findByUsername(currentUsername)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable: " + currentUsername));
+
+        if (currentUser.getRole() == RoleType.EMPLOYEE) {
+            return messageRepository.findByRecipientIdOrderByCreatedAtDesc(currentUser.getId()).stream()
+                    .map(msg -> MessageResponse.fromEntity(msg, false))
+                    .collect(Collectors.toList());
+        }
+
+        return getAllMessages();
+    }
+
+    public List<MessageResponse> getAllMessages() {
+        return messageRepository.findAllByOrderByCreatedAtDesc().stream()
+                .map(msg -> MessageResponse.fromEntity(msg, false))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Récupère un message par son ID :
+     * - Si EMPLOYEE : vérifie qu'il est bien la cible (destinataire) du message, sinon 403 FORBIDDEN
+     * - Si ADMIN ou MANAGER : accès accordé
+     */
+    public MessageResponse getAuthorizedMessageById(Long id, String currentUsername) {
+        Message message = messageRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Message introuvable avec l'id: " + id));
+
+        if (currentUsername != null && !currentUsername.isBlank()) {
+            User currentUser = userRepository.findByUsername(currentUsername)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable: " + currentUsername));
+
+            if (currentUser.getRole() == RoleType.EMPLOYEE) {
+                if (message.getRecipient() == null || !message.getRecipient().getId().equals(currentUser.getId())) {
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                            "Accès refusé : l'employé ne peut lire que les messages dont il est la cible.");
+                }
+            }
+        }
+
+        return MessageResponse.fromEntity(message, false);
+    }
+
+    public MessageResponse getMessageById(Long id) {
+        return getAuthorizedMessageById(id, null);
+    }
+}
