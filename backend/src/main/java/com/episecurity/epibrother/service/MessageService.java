@@ -109,9 +109,10 @@ public class MessageService {
 
     /**
      * Récupère les messages autorisés :
-     * - Si EMPLOYEE : UNIQUEMENT les messages dont il est la cible (destinataire)
-     * - Si ADMIN ou MANAGER : tous les messages
+     * - Si EMPLOYEE ou MANAGER : UNIQUEMENT les messages dont l'utilisateur est la cible (destinataire)
+     * - Si ADMIN : tous les messages
      */
+    @Transactional(readOnly = true)
     public List<MessageResponse> getAuthorizedMessages(String currentUsername) {
         if (currentUsername == null || currentUsername.isBlank()) {
             return getAllMessages();
@@ -120,7 +121,8 @@ public class MessageService {
         User currentUser = userRepository.findByUsername(currentUsername)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable: " + currentUsername));
 
-        if (currentUser.getRole() == RoleType.EMPLOYEE) {
+        // Les employés et les managers ne peuvent lister que les messages dont ils sont la cible
+        if (currentUser.getRole() != RoleType.ADMIN) {
             return messageRepository.findByRecipientIdOrderByCreatedAtDesc(currentUser.getId()).stream()
                     .map(msg -> MessageResponse.fromEntity(msg, false))
                     .collect(Collectors.toList());
@@ -129,6 +131,7 @@ public class MessageService {
         return getAllMessages();
     }
 
+    @Transactional(readOnly = true)
     public List<MessageResponse> getAllMessages() {
         return messageRepository.findAllByOrderByCreatedAtDesc().stream()
                 .map(msg -> MessageResponse.fromEntity(msg, false))
@@ -137,9 +140,10 @@ public class MessageService {
 
     /**
      * Récupère un message par son ID :
-     * - Si EMPLOYEE : vérifie qu'il est bien la cible (destinataire) du message, sinon 403 FORBIDDEN
-     * - Si ADMIN ou MANAGER : accès accordé
+     * - Si EMPLOYEE ou MANAGER : vérifie qu'il est bien la cible (destinataire) du message, sinon 403 FORBIDDEN
+     * - Si ADMIN : accès accordé à tous les messages
      */
+    @Transactional(readOnly = true)
     public MessageResponse getAuthorizedMessageById(Long id, String currentUsername) {
         Message message = messageRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Message introuvable avec l'id: " + id));
@@ -148,10 +152,10 @@ public class MessageService {
             User currentUser = userRepository.findByUsername(currentUsername)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable: " + currentUsername));
 
-            if (currentUser.getRole() == RoleType.EMPLOYEE) {
+            if (currentUser.getRole() != RoleType.ADMIN) {
                 if (message.getRecipient() == null || !message.getRecipient().getId().equals(currentUser.getId())) {
                     throw new ResponseStatusException(HttpStatus.FORBIDDEN,
-                            "Accès refusé : l'employé ne peut lire que les messages dont il est la cible.");
+                            "Accès refusé : vous ne pouvez lire que les messages dont vous êtes la cible.");
                 }
             }
         }

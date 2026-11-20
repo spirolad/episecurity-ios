@@ -1,18 +1,14 @@
 package com.episecurity.epibrother.ai;
 
-public class AiAnalysisResult {
-
-    private final boolean flagged;
-    private final String reason;
-    private final String severity;
-    private final double confidenceScore;
-
-    public AiAnalysisResult(boolean flagged, String reason, String severity, double confidenceScore) {
-        this.flagged = flagged;
-        this.reason = reason;
-        this.severity = severity;
-        this.confidenceScore = confidenceScore;
-    }
+/**
+ * Résultat immuable de l'analyse IA d'un message.
+ */
+public record AiAnalysisResult(
+        boolean flagged,
+        String reason,
+        String severity,
+        double confidenceScore
+) {
 
     public static AiAnalysisResult clean() {
         return new AiAnalysisResult(false, null, "LOW", 0.0);
@@ -22,6 +18,7 @@ public class AiAnalysisResult {
         return new AiAnalysisResult(true, reason, severity, confidenceScore);
     }
 
+    // Méthodes de compatibilité JavaBean
     public boolean isFlagged() {
         return flagged;
     }

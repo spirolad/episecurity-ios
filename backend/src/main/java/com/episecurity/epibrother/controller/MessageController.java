@@ -38,8 +38,8 @@ public class MessageController {
 
     /**
      * Liste les messages :
-     * - Pour un EMPLOYEE : uniquement les messages dont il est la cible.
-     * - Pour un MANAGER ou ADMIN : tous les messages.
+     * - Pour un EMPLOYEE ou MANAGER : uniquement les messages dont il est la cible.
+     * - Pour un ADMIN : tous les messages.
      */
     @GetMapping
     public ResponseEntity<List<MessageResponse>> getAllMessages(
@@ -50,8 +50,8 @@ public class MessageController {
 
     /**
      * Détail d'un message :
-     * - Pour un EMPLOYEE : interdit (403) s'il n'est pas le destinataire cible.
-     * - Pour un MANAGER ou ADMIN : autorisé.
+     * - Pour un EMPLOYEE ou MANAGER : interdit (403) s'il n'est pas le destinataire cible.
+     * - Pour un ADMIN : autorisé.
      */
     @GetMapping("/{id}")
     public ResponseEntity<MessageResponse> getMessageById(

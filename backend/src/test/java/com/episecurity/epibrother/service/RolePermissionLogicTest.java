@@ -113,22 +113,34 @@ class RolePermissionLogicTest {
     }
 
     @Test
-    void testManagerAndAdmin_GetAuthorizedMessages_ReturnsAllMessages() {
+    void testAdmin_GetAuthorizedMessages_ReturnsAllMessages() {
         Message msg1 = new Message(employeeAlice, employeeBob, "Hello");
         when(messageRepository.findAllByOrderByCreatedAtDesc()).thenReturn(List.of(msg1));
 
         List<MessageResponse> adminMessages = messageService.getAuthorizedMessages("admin");
         assertEquals(1, adminMessages.size());
 
+        verify(messageRepository, times(1)).findAllByOrderByCreatedAtDesc();
+    }
+
+    @Test
+    void testManager_GetAuthorizedMessages_ReturnsOnlyMessagesWhereTarget() {
+        Message msgForManager = new Message(employeeAlice, manager, "Pour le manager");
+        msgForManager.setId(202L);
+
+        when(messageRepository.findByRecipientIdOrderByCreatedAtDesc(2L)).thenReturn(List.of(msgForManager));
+
         List<MessageResponse> managerMessages = messageService.getAuthorizedMessages("manager_dupont");
         assertEquals(1, managerMessages.size());
+        assertEquals(202L, managerMessages.get(0).getId());
 
-        verify(messageRepository, times(2)).findAllByOrderByCreatedAtDesc();
+        verify(messageRepository, times(1)).findByRecipientIdOrderByCreatedAtDesc(2L);
+        verify(messageRepository, never()).findAllByOrderByCreatedAtDesc();
     }
 
     @Test
     void testEmployee_GetMessageById_WhenRecipient_Success() {
-        Message msgForAlice = new Message(employeeBob, employeeAlice, "Secret");
+        Message msgForAlice = new Message(employeeBob, employeeAlice, "Message test");
         msgForAlice.setId(301L);
         when(messageRepository.findById(301L)).thenReturn(Optional.of(msgForAlice));
 
@@ -148,17 +160,23 @@ class RolePermissionLogicTest {
     }
 
     @Test
-    void testManagerAndAdmin_GetMessageById_AnyMessage_Success() {
+    void testManager_GetMessageById_WhenNotRecipient_ThrowsForbidden() {
+        Message msgForBob = new Message(employeeAlice, employeeBob, "Pour Bob uniquement");
+        msgForBob.setId(304L);
+        when(messageRepository.findById(304L)).thenReturn(Optional.of(msgForBob));
+
+        // Le manager essaie de lire un message qui ne lui est pas destiné
+        assertThrows(ResponseStatusException.class, () -> messageService.getAuthorizedMessageById(304L, "manager_dupont"));
+    }
+
+    @Test
+    void testAdmin_GetMessageById_AnyMessage_Success() {
         Message msgBetweenEmployees = new Message(employeeAlice, employeeBob, "Message interne");
         msgBetweenEmployees.setId(303L);
         when(messageRepository.findById(303L)).thenReturn(Optional.of(msgBetweenEmployees));
 
-        // Admin peut lire
+        // Admin peut lire n'importe quel message
         MessageResponse adminRes = messageService.getAuthorizedMessageById(303L, "admin");
         assertNotNull(adminRes);
-
-        // Manager peut lire
-        MessageResponse managerRes = messageService.getAuthorizedMessageById(303L, "manager_dupont");
-        assertNotNull(managerRes);
     }
 }
