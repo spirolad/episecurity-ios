@@ -4,7 +4,7 @@ Epibrother est une solution de messagerie interne destinée aux entreprises. Son
 
 Lorsqu'un message est identifié comme potentiellement contraire aux règles établies par l'entreprise, il est automatiquement signalé au manager concerné afin qu'il puisse examiner la situation et prendre les mesures appropriées.
 
-L'application est disponible sur macOD
+L'application est disponible sur macOS et sur iOS.
 ## Découpage des responsabilités
 
 * Jules Ladaigue: Chef de projet 
@@ -50,7 +50,7 @@ Le projet sera découpé en 5 séances de 4 heures avec chacune un backlog et un
 - Messages problématiques
   - Consultation des messages
 - Information légale
-  - Information par le salarié du traitement des messages 
+  - Information par le salarié du traitement des messages
 
 
 ## Scénario utilisateur
