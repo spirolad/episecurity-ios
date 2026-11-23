@@ -118,7 +118,7 @@ public class LoginViewModel: ObservableObject {
     }
     
     // Remplissage rapide pour les tests ou la démonstration
-    public func fillTestAccount(username: String, pass: String = "password123") {
+    public func fillTestAccount(username: String, pass: String) {
         self.username = username
         self.password = pass
     }

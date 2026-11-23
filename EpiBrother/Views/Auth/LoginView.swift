@@ -117,10 +117,10 @@ public struct LoginView: View {
                                 .padding(.horizontal)
                             
                             HStack(spacing: 8) {
-                                quickLoginButton(title: "Admin", user: "admin")
-                                quickLoginButton(title: "Manager", user: "manager_dupont")
-                                quickLoginButton(title: "Alice", user: "alice")
-                                quickLoginButton(title: "Bob", user: "bob")
+                                quickLoginButton(title: "Admin", user: "admin", password: "admin123")
+                                quickLoginButton(title: "Manager", user: "manager_dupont", password: "manager123")
+                                quickLoginButton(title: "Alice", user: "alice", password: "alice123")
+                                quickLoginButton(title: "Bob", user: "bob", password: "bob123")
                             }
                             .padding(.horizontal)
                         }
@@ -161,9 +161,9 @@ public struct LoginView: View {
         }
     }
     
-    private func quickLoginButton(title: String, user: String) -> some View {
+    private func quickLoginButton(title: String, user: String, password: String) -> some View {
         Button(action: {
-            viewModel.fillTestAccount(username: user)
+            viewModel.fillTestAccount(username: user, pass: password)
         }) {
             Text(title)
                 .font(.caption.bold())
