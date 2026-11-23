@@ -128,14 +128,6 @@ public struct LoginView: View {
                         // Liens d'action (Inscription & Informations légales)
                         VStack(spacing: 14) {
                             Button(action: {
-                                viewModel.showRegisterSheet = true
-                            }) {
-                                Text("Nouveau collaborateur ? **Créer un compte**")
-                                    .font(.footnote)
-                                    .foregroundColor(.blue)
-                            }
-                            
-                            Button(action: {
                                 viewModel.showLegalNotice = true
                             }) {
                                 HStack(spacing: 4) {
