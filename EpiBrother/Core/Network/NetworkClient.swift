@@ -62,8 +62,8 @@ public class NetworkClient: NSObject, NetworkClientProtocol {
         configuration.timeoutIntervalForResource = 60.0
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         
-        super.init()
         self.session = URLSession(configuration: configuration, delegate: certificatePinning, delegateQueue: nil)
+        super.init()
     }
     
     public static var jsonDecoder: JSONDecoder {
