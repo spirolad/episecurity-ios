@@ -36,8 +36,11 @@ public class SignalementController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SignalementResponse> getSignalementById(@PathVariable Long id) {
-        return ResponseEntity.ok(signalementService.getSignalementById(id));
+    public ResponseEntity<SignalementResponse> getSignalementById(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails != null ? userDetails.getUsername() : null;
+        return ResponseEntity.ok(signalementService.getSignalementById(id, username));
     }
 
     /**
@@ -46,7 +49,9 @@ public class SignalementController {
     @PatchMapping("/{id}")
     public ResponseEntity<SignalementResponse> updateStatus(
             @PathVariable Long id,
-            @Valid @RequestBody UpdateSignalementRequest request) {
-        return ResponseEntity.ok(signalementService.updateStatus(id, request.getStatus()));
+            @Valid @RequestBody UpdateSignalementRequest request,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails != null ? userDetails.getUsername() : null;
+        return ResponseEntity.ok(signalementService.updateStatus(id, request.getStatus(), username));
     }
 }
