@@ -114,4 +114,45 @@ class MessageServiceTest {
         assertTrue(captured.getReason().contains("Epita"));
         assertEquals(11L, captured.getMessage().getId());
     }
+
+    @Test
+    void testSendEncryptedMessage_UsesFrontendAnalysis() {
+        User sender = new User("alice", RoleType.EMPLOYEE, "Alice Martin");
+        sender.setId(1L);
+        User recipient = new User("bob", RoleType.EMPLOYEE, "Bob Durand");
+        recipient.setId(2L);
+        User manager = new User("manager", RoleType.MANAGER, "Manager");
+        manager.setId(3L);
+        sender.setManager(manager);
+        recipient.setManager(manager);
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(sender));
+        when(userRepository.findById(2L)).thenReturn(Optional.of(recipient));
+        when(messageRepository.save(any(Message.class))).thenAnswer(invocation -> {
+            Message message = invocation.getArgument(0);
+            message.setId(12L);
+            return message;
+        });
+        when(signalementRepository.save(any(Signalement.class))).thenAnswer(invocation -> {
+            Signalement signalement = invocation.getArgument(0);
+            signalement.setId(101L);
+            return signalement;
+        });
+
+        SendMessageRequest request = new SendMessageRequest(
+                1L,
+                2L,
+                "ENC:Y2lwaGVydGV4dA==",
+                true,
+                "Analyse IA (DLP) : mot sensible détecté",
+                "HIGH");
+
+        MessageResponse response = messageService.sendMessage(request);
+
+        assertTrue(response.isFlaggedByAi());
+        ArgumentCaptor<Signalement> captor = ArgumentCaptor.forClass(Signalement.class);
+        verify(signalementRepository, times(1)).save(captor.capture());
+        assertEquals("HIGH", captor.getValue().getSeverity());
+        assertTrue(captor.getValue().getReason().contains("DLP"));
+    }
 }
