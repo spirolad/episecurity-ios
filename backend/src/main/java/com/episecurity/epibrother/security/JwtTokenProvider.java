@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class JwtTokenProvider {
@@ -20,6 +23,7 @@ public class JwtTokenProvider {
 
     private final SecretKey key;
     private final long expirationMs;
+    private final Set<String> revokedJtis = ConcurrentHashMap.newKeySet();
 
     public JwtTokenProvider(
             @Value("${jwt.secret}") String secret,
@@ -41,6 +45,7 @@ public class JwtTokenProvider {
         Date expiryDate = new Date(now.getTime() + expirationMs);
 
         return Jwts.builder()
+                .id(UUID.randomUUID().toString())
                 .subject(username)
                 .claim("userId", userId)
                 .claim("role", role.name())
@@ -72,11 +77,25 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-            getClaims(token);
+            Claims claims = getClaims(token);
+            if (revokedJtis.contains(claims.getId())) {
+                return false;
+            }
             return true;
         } catch (JwtException | IllegalArgumentException ex) {
             log.error("Token JWT invalide ou expiré: {}", ex.getMessage());
             return false;
+        }
+    }
+
+    public void revokeToken(String token) {
+        try {
+            Claims claims = getClaims(token);
+            if (claims.getId() != null) {
+                revokedJtis.add(claims.getId());
+            }
+        } catch (JwtException | IllegalArgumentException ex) {
+            log.debug("Impossible de révoquer un JWT déjà invalide");
         }
     }
 

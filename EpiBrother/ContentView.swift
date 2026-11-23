@@ -81,6 +81,11 @@ struct ContentView: View {
                     .tabItem {
                         Label("Information légale", systemImage: "hand.raised.square.fill")
                     }
+
+                ProfileView()
+                    .tabItem {
+                        Label("Profil", systemImage: "person.crop.circle")
+                    }
                 
             case .manager:
                 // 1. Signalements d'équipe reçus de l'IA
@@ -99,6 +104,11 @@ struct ContentView: View {
                 LegalNoticeView()
                     .tabItem {
                         Label("Information légale", systemImage: "hand.raised.square.fill")
+                    }
+
+                ProfileView()
+                    .tabItem {
+                        Label("Profil", systemImage: "person.crop.circle")
                     }
                 
             case .admin:
@@ -131,7 +141,108 @@ struct ContentView: View {
                     .tabItem {
                         Label("Conformité CNIL", systemImage: "hand.raised.square.fill")
                     }
+
+                ProfileView()
+                    .tabItem {
+                        Label("Profil", systemImage: "person.crop.circle")
+                    }
             }
+        }
+    }
+}
+
+private struct ProfileView: View {
+    @StateObject private var authService = AuthService.shared
+    @State private var username = ""
+    @State private var fullName = ""
+    @State private var password = ""
+    @State private var isSaving = false
+    @State private var statusMessage: String?
+    @State private var isError = false
+
+    var body: some View {
+        NavigationView {
+            Form {
+                if let user = authService.currentUser {
+                    Section(header: Text("Compte")) {
+                        HStack {
+                            Text("Rôle")
+                            Spacer()
+                            BadgeView(role: user.role)
+                        }
+                        if let managerName = user.managerName {
+                            Text("Manager : \(managerName)")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+
+                Section(header: Text("Informations personnelles")) {
+                    TextField("Identifiant", text: $username)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                    TextField("Nom complet", text: $fullName)
+                    SecureField("Nouveau mot de passe", text: $password)
+                }
+
+                if let statusMessage {
+                    Section {
+                        Text(statusMessage)
+                            .foregroundColor(isError ? .red : .green)
+                    }
+                }
+
+                Section {
+                    Button(action: saveProfile) {
+                        if isSaving {
+                            ProgressView()
+                                .frame(maxWidth: .infinity)
+                        } else {
+                            Text("Enregistrer")
+                                .frame(maxWidth: .infinity)
+                                .fontWeight(.semibold)
+                        }
+                    }
+                    .disabled(isSaving)
+                }
+
+                Section {
+                    Button(role: .destructive, action: {
+                        authService.logout()
+                    }) {
+                        Label("Se déconnecter", systemImage: "rectangle.portrait.and.arrow.right")
+                    }
+                }
+            }
+            .navigationTitle("Mon profil")
+            .onAppear {
+                if let user = authService.currentUser {
+                    username = user.username
+                    fullName = user.fullName
+                }
+            }
+        }
+    }
+
+    private func saveProfile() {
+        isSaving = true
+        statusMessage = nil
+        isError = false
+
+        Task {
+            do {
+                _ = try await authService.updateProfile(
+                    username: username.trimmingCharacters(in: .whitespacesAndNewlines),
+                    fullName: fullName.trimmingCharacters(in: .whitespacesAndNewlines),
+                    password: password.isEmpty ? nil : password
+                )
+                password = ""
+                statusMessage = "Profil enregistré."
+            } catch {
+                isError = true
+                statusMessage = error.localizedDescription
+            }
+            isSaving = false
         }
     }
 }

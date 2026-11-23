@@ -1,6 +1,7 @@
 package com.episecurity.epibrother.controller;
 
 import com.episecurity.epibrother.dto.request.UpdateUserRoleRequest;
+import com.episecurity.epibrother.dto.request.UpdateManagerRequest;
 import com.episecurity.epibrother.dto.response.UserResponse;
 import com.episecurity.epibrother.service.AdminService;
 import jakarta.validation.Valid;
@@ -45,5 +46,12 @@ public class AdminController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         adminService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/users/{id}/manager")
+    public ResponseEntity<UserResponse> assignManager(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateManagerRequest request) {
+        return ResponseEntity.ok(adminService.assignEmployeeToManager(id, request.getManagerId()));
     }
 }

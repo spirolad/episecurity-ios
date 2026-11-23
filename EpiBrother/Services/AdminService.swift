@@ -49,17 +49,6 @@ public class AdminService: AdminServiceProtocol {
                 token: token
             )
             
-            // Enrichir avec les affectations manager sauvegardées
-            let assignments = getStoredAssignments()
-            for i in 0..<users.count {
-                if let mgrId = assignments[users[i].id] {
-                    users[i].managerId = mgrId
-                    if let mgr = users.first(where: { $0.id == mgrId }) {
-                        users[i].managerName = mgr.fullName
-                    }
-                }
-            }
-            
             database.save(users, forKey: usersCacheKey)
             return users
         } catch {
@@ -148,34 +137,27 @@ public class AdminService: AdminServiceProtocol {
     }
     
     public func assignEmployeeToManager(employeeId: Int64, managerId: Int64?) async throws -> User {
-        var assignments = getStoredAssignments()
-        if let managerId = managerId {
-            assignments[employeeId] = managerId
-        } else {
-            assignments.removeValue(forKey: employeeId)
+        guard let token = secureStorage.getToken() else {
+            throw APIError.unauthorized
         }
-        database.save(assignments, forKey: teamAssignmentsKey)
-        
-        // Recharger l'utilisateur
-        var users = try await fetchUsers()
-        guard let index = users.firstIndex(where: { $0.id == employeeId }) else {
-            throw APIError.notFound("Salarié introuvable")
+
+        struct UpdateManagerDTO: Codable {
+            let managerId: Int64?
         }
-        
-        users[index].managerId = managerId
-        if let managerId = managerId, let manager = users.first(where: { $0.id == managerId }) {
-            users[index].managerName = manager.fullName
-        } else {
-            users[index].managerName = nil
-        }
-        
+
+        let updatedUser: User = try await networkClient.execute(
+            endpoint: .updateUserManager(id: employeeId),
+            body: UpdateManagerDTO(managerId: managerId),
+            token: token
+        )
+
         logAction(
             action: "AFFECTATION_EQUIPE",
             target: "Salarié id: \(employeeId)",
             details: managerId != nil ? "Affecté au Manager id: \(managerId!)" : "Désassigné de son manager"
         )
-        
-        return users[index]
+
+        return updatedUser
     }
     
     public func getAuditLogs() -> [AuditLog] {
