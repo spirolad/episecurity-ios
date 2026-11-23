@@ -109,23 +109,7 @@ public struct LoginView: View {
                         .padding(.horizontal)
                         .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 5)
                         
-                        // Comptes de démonstration rapide
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Accès rapide de démonstration :")
-                                .font(.caption.bold())
-                                .foregroundColor(.secondary)
-                                .padding(.horizontal)
-                            
-                            HStack(spacing: 8) {
-                                quickLoginButton(title: "Admin", user: "admin", password: "admin123")
-                                quickLoginButton(title: "Manager", user: "manager_dupont", password: "manager123")
-                                quickLoginButton(title: "Alice", user: "alice", password: "alice123")
-                                quickLoginButton(title: "Bob", user: "bob", password: "bob123")
-                            }
-                            .padding(.horizontal)
-                        }
-                        
-                        // Liens d'action (Inscription & Informations légales)
+                        // Informations légales
                         VStack(spacing: 14) {
                             Button(action: {
                                 viewModel.showLegalNotice = true
@@ -150,24 +134,6 @@ public struct LoginView: View {
             .sheet(isPresented: $viewModel.showLegalNotice) {
                 LegalNoticeView()
             }
-        }
-    }
-    
-    private func quickLoginButton(title: String, user: String, password: String) -> some View {
-        Button(action: {
-            viewModel.fillTestAccount(username: user, pass: password)
-        }) {
-            Text(title)
-                .font(.caption.bold())
-                .padding(.horizontal, 10)
-                .padding(.vertical, 6)
-                .background(Color(.tertiarySystemBackground))
-                .foregroundColor(.primary)
-                .cornerRadius(8)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-                )
         }
     }
     
