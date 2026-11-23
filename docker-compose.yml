@@ -4,7 +4,10 @@ services:
     container_name: epibrother-postgres
     restart: unless-stopped
     env_file:
-      - .env
+      - path: .env.docker
+        required: false
+      - path: .env
+        required: false
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-epibrother}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -13,12 +16,13 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./backend/src/main/resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./backend/src/main/resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d epibrother"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-epibrother}"]
       interval: 5s
       timeout: 5s
       retries: 5
+      start_period: 10s
 
   backend:
     build:
@@ -27,7 +31,10 @@ services:
     container_name: epibrother-backend
     restart: unless-stopped
     env_file:
-      - .env
+      - path: .env.docker
+        required: false
+      - path: .env
+        required: false
     depends_on:
       postgres:
         condition: service_healthy
@@ -37,9 +44,13 @@ services:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL:-jdbc:postgresql://postgres:5432/epibrother}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME:-postgres}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO:-update}
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-86400000}
+      DEFAULT_ADMIN_PASSWORD: ${DEFAULT_ADMIN_PASSWORD}
+      DEFAULT_MANAGER_PASSWORD: ${DEFAULT_MANAGER_PASSWORD}
+      DEFAULT_ALICE_PASSWORD: ${DEFAULT_ALICE_PASSWORD}
+      DEFAULT_BOB_PASSWORD: ${DEFAULT_BOB_PASSWORD}
 
 volumes:
   postgres_data:
