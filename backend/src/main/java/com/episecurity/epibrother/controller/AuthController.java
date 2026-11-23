@@ -5,6 +5,7 @@ import com.episecurity.epibrother.dto.request.LoginRequest;
 import com.episecurity.epibrother.dto.response.AuthResponse;
 import com.episecurity.epibrother.dto.response.UserResponse;
 import com.episecurity.epibrother.service.AuthService;
+import com.episecurity.epibrother.security.JwtTokenProvider;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtTokenProvider tokenProvider;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, JwtTokenProvider tokenProvider) {
         this.authService = authService;
+        this.tokenProvider = tokenProvider;
     }
 
     @PostMapping("/login")
@@ -40,5 +43,14 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok(authService.getCurrentUser(userDetails.getUsername()));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(
+            @RequestHeader(value = "Authorization", required = false) String authorization) {
+        if (authorization != null && authorization.startsWith("Bearer ")) {
+            tokenProvider.revokeToken(authorization.substring(7));
+        }
+        return ResponseEntity.noContent().build();
     }
 }

@@ -6,6 +6,8 @@ import com.episecurity.epibrother.service.SignalementService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +29,10 @@ public class SignalementController {
      */
     @GetMapping
     public ResponseEntity<List<SignalementResponse>> getAllSignalements(
-            @RequestParam(required = false) String status) {
-        return ResponseEntity.ok(signalementService.getAllSignalements(status));
+            @RequestParam(required = false) String status,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails != null ? userDetails.getUsername() : null;
+        return ResponseEntity.ok(signalementService.getAllSignalements(status, username));
     }
 
     @GetMapping("/{id}")

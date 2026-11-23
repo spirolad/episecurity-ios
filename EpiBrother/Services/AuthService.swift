@@ -14,6 +14,7 @@ public protocol AuthServiceProtocol: ObservableObject {
     var token: String? { get }
     func login(username: String, password: String) async throws -> User
     func register(username: String, password: String, role: Role, fullName: String) async throws -> User
+    func updateProfile(username: String?, fullName: String?, password: String?) async throws -> User
     func logout()
     func restoreSession() async -> Bool
 }
@@ -104,8 +105,41 @@ public class AuthService: ObservableObject, AuthServiceProtocol {
         WebSocketClient.shared.connect(token: authResponse.token)
         return user
     }
+
+    public func updateProfile(username: String? = nil, fullName: String? = nil, password: String? = nil) async throws -> User {
+        guard let savedToken = secureStorage.getToken() else {
+            throw APIError.unauthorized
+        }
+
+        struct UpdateProfileDTO: Codable {
+            let username: String?
+            let fullName: String?
+            let password: String?
+        }
+
+        let body = UpdateProfileDTO(username: username, fullName: fullName, password: password)
+        let updatedUser: User = try await networkClient.execute(
+            endpoint: .updateProfile,
+            body: body,
+            token: savedToken
+        )
+
+        self.currentUser = updatedUser
+        secureStorage.saveCurrentUser(updatedUser)
+        return updatedUser
+    }
     
     public func logout() {
+        if let savedToken = secureStorage.getToken() {
+            Task {
+                try? await networkClient.executeWithoutResponse(
+                    endpoint: .logout,
+                    body: nil,
+                    token: savedToken
+                )
+            }
+        }
+
         self.token = nil
         self.currentUser = nil
         self.isAuthenticated = false

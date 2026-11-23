@@ -97,7 +97,7 @@ public class LoginViewModel: ObservableObject {
             _ = try await authService.register(
                 username: regUsername,
                 password: regPassword,
-                role: regRole,
+                role: .employee,
                 fullName: regFullName
             )
             isLoading = false

@@ -16,6 +16,12 @@ public class AiAnalysisService {
 
     private static final Logger log = LoggerFactory.getLogger(AiAnalysisService.class);
     private static final Pattern EPITA_PATTERN = Pattern.compile("\\bepita\\b", Pattern.CASE_INSENSITIVE);
+    private static final Pattern DLP_PATTERN = Pattern.compile(
+            "(mot de passe|password|clé secrète|secret key|api[_ -]?key|token|fuite|confidentiel)",
+            Pattern.CASE_INSENSITIVE);
+    private static final Pattern TOXIC_PATTERN = Pattern.compile(
+            "(menace|harcèlement|harcelement|insulte|raciste|sexiste|humiliation)",
+            Pattern.CASE_INSENSITIVE);
 
     /**
      * Analyse le contenu d'un message pour détecter d'éventuelles infractions ou termes sensibles.
@@ -25,6 +31,9 @@ public class AiAnalysisService {
      */
     public AiAnalysisResult analyze(String content) {
         if (content == null || content.isBlank()) {
+            return AiAnalysisResult.clean();
+        }
+        if (content.startsWith("ENC:")) {
             return AiAnalysisResult.clean();
         }
 
@@ -40,6 +49,22 @@ public class AiAnalysisService {
 
             log.warn("⚠️ ALERTE IA DÉCLENCHÉE : Le message contient le terme 'Epita' ! Sévérité: {}", severity);
             return AiAnalysisResult.flagged(reason, severity, confidenceScore);
+        }
+
+        java.util.regex.Matcher dlpMatcher = DLP_PATTERN.matcher(content);
+        if (dlpMatcher.find()) {
+            return AiAnalysisResult.flagged(
+                    "Analyse IA (DLP) : mot sensible détecté",
+                    "HIGH",
+                    0.88);
+        }
+
+        java.util.regex.Matcher toxicMatcher = TOXIC_PATTERN.matcher(content);
+        if (toxicMatcher.find()) {
+            return AiAnalysisResult.flagged(
+                    "Analyse IA (conformité) : comportement potentiellement toxique détecté",
+                    "MEDIUM",
+                    0.82);
         }
 
         // Si aucune anomalie détectée

@@ -49,4 +49,18 @@ class AiAnalysisServiceTest {
         AiAnalysisResult result = aiAnalysisService.analyze("");
         assertFalse(result.isFlagged());
     }
+
+    @Test
+    void testDlpKeyword_ShouldBeFlagged() {
+        AiAnalysisResult result = aiAnalysisService.analyze("Voici le mot de passe de production.");
+        assertTrue(result.isFlagged());
+        assertEquals("HIGH", result.getSeverity());
+        assertTrue(result.getReason().contains("DLP"));
+    }
+
+    @Test
+    void testEncryptedMessage_ShouldNotBeAnalysedAsPlainText() {
+        AiAnalysisResult result = aiAnalysisService.analyze("ENC:YmFzZTY0");
+        assertFalse(result.isFlagged());
+    }
 }

@@ -45,7 +45,8 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Le nom d'utilisateur '" + request.getUsername() + "' est déjà pris");
         }
 
-        RoleType role = request.getRole() != null ? request.getRole() : RoleType.EMPLOYEE;
+        // An anonymous registration can only create an employee account.
+        RoleType role = RoleType.EMPLOYEE;
         String rawPassword = (request.getPassword() != null && !request.getPassword().isBlank()) 
                 ? request.getPassword() 
                 : "password123";

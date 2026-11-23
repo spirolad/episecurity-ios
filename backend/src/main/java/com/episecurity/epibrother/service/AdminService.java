@@ -26,4 +26,8 @@ public class AdminService {
     public void deleteUser(Long userId) {
         userService.deleteUser(userId);
     }
+
+    public UserResponse assignEmployeeToManager(Long employeeId, Long managerId) {
+        return userService.assignManager(employeeId, managerId);
+    }
 }

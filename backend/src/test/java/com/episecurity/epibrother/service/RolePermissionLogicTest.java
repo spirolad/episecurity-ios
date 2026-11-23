@@ -58,6 +58,8 @@ class RolePermissionLogicTest {
 
         employeeBob = new User("bob", "pwd", RoleType.EMPLOYEE, "Bob Durand");
         employeeBob.setId(4L);
+        employeeAlice.setManager(manager);
+        employeeBob.setManager(manager);
 
         when(userRepository.findByUsername("admin")).thenReturn(Optional.of(admin));
         when(userRepository.findByUsername("manager_dupont")).thenReturn(Optional.of(manager));
@@ -108,6 +110,7 @@ class RolePermissionLogicTest {
         List<MessageResponse> responses = messageService.getAuthorizedMessages("alice");
         assertEquals(1, responses.size());
         assertEquals(201L, responses.get(0).getId());
+        verify(messageRepository, times(1)).findBySenderIdOrderByCreatedAtDesc(3L);
         verify(messageRepository, times(1)).findByRecipientIdOrderByCreatedAtDesc(3L);
         verify(messageRepository, never()).findAllByOrderByCreatedAtDesc();
     }
@@ -134,6 +137,7 @@ class RolePermissionLogicTest {
         assertEquals(1, managerMessages.size());
         assertEquals(202L, managerMessages.get(0).getId());
 
+        verify(messageRepository, times(1)).findBySenderIdOrderByCreatedAtDesc(2L);
         verify(messageRepository, times(1)).findByRecipientIdOrderByCreatedAtDesc(2L);
         verify(messageRepository, never()).findAllByOrderByCreatedAtDesc();
     }
@@ -151,7 +155,7 @@ class RolePermissionLogicTest {
 
     @Test
     void testEmployee_GetMessageById_WhenNotRecipient_ThrowsForbidden() {
-        Message msgForBob = new Message(employeeAlice, employeeBob, "Pour Bob uniquement");
+        Message msgForBob = new Message(employeeBob, employeeBob, "Pour Bob uniquement");
         msgForBob.setId(302L);
         when(messageRepository.findById(302L)).thenReturn(Optional.of(msgForBob));
 
