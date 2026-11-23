@@ -2,7 +2,10 @@
 .env
 .env.local
 .env.*.local
+.env.docker
 *.env
+!.env.example
+!.env.docker.example
 
 # Maven
 backend/target/
