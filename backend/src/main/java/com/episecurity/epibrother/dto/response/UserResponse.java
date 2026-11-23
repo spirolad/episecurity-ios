@@ -12,6 +12,8 @@ public class UserResponse {
     private RoleType role;
     private String fullName;
     private LocalDateTime createdAt;
+    private Long managerId;
+    private String managerName;
 
     public UserResponse() {
     }
@@ -24,6 +26,13 @@ public class UserResponse {
         this.createdAt = createdAt;
     }
 
+    public UserResponse(Long id, String username, RoleType role, String fullName, LocalDateTime createdAt,
+                        Long managerId, String managerName) {
+        this(id, username, role, fullName, createdAt);
+        this.managerId = managerId;
+        this.managerName = managerName;
+    }
+
     public static UserResponse fromEntity(User user) {
         if (user == null) {
             return null;
@@ -33,7 +42,9 @@ public class UserResponse {
                 user.getUsername(),
                 user.getRole(),
                 user.getFullName(),
-                user.getCreatedAt()
+                user.getCreatedAt(),
+                user.getManager() != null ? user.getManager().getId() : null,
+                user.getManager() != null ? user.getManager().getFullName() : null
         );
     }
 
@@ -75,5 +86,21 @@ public class UserResponse {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Long getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(Long managerId) {
+        this.managerId = managerId;
+    }
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
     }
 }

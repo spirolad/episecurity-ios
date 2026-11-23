@@ -51,6 +51,10 @@ class MessageServiceTest {
 
         User recipient = new User("bob", RoleType.EMPLOYEE, "Bob Durand");
         recipient.setId(2L);
+        User manager = new User("manager", RoleType.MANAGER, "Manager");
+        manager.setId(3L);
+        sender.setManager(manager);
+        recipient.setManager(manager);
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(sender));
         when(userRepository.findById(2L)).thenReturn(Optional.of(recipient));
@@ -76,6 +80,10 @@ class MessageServiceTest {
 
         User recipient = new User("bob", RoleType.EMPLOYEE, "Bob Durand");
         recipient.setId(2L);
+        User manager = new User("manager", RoleType.MANAGER, "Manager");
+        manager.setId(3L);
+        sender.setManager(manager);
+        recipient.setManager(manager);
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(sender));
         when(userRepository.findById(2L)).thenReturn(Optional.of(recipient));

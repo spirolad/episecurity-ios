@@ -77,6 +77,16 @@ public class MessageService {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Destinataire introuvable avec l'id: " + request.getRecipientId()));
         }
 
+        if (sender.getRole() == RoleType.EMPLOYEE
+                && (recipient == null
+                || recipient.getRole() != RoleType.EMPLOYEE
+                || recipient.getManager() == null
+                || sender.getManager() == null
+                || !recipient.getManager().getId().equals(sender.getManager().getId()))) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                    "Vous ne pouvez envoyer un message qu'à un collègue affecté au même manager.");
+        }
+
         // 1. Sauvegarde du message
         Message message = new Message(sender, recipient, request.getContent());
         Message savedMessage = messageRepository.save(message);
@@ -121,9 +131,15 @@ public class MessageService {
         User currentUser = userRepository.findByUsername(currentUsername)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable: " + currentUsername));
 
-        // Les employés et les managers ne peuvent lister que les messages dont ils sont la cible
+        // Les employés et les managers peuvent lire uniquement leurs conversations,
+        // dans les deux sens (envoyé ou reçu).
         if (currentUser.getRole() != RoleType.ADMIN) {
-            return messageRepository.findByRecipientIdOrderByCreatedAtDesc(currentUser.getId()).stream()
+            List<Message> sent = messageRepository.findBySenderIdOrderByCreatedAtDesc(currentUser.getId());
+            List<Message> received = messageRepository.findByRecipientIdOrderByCreatedAtDesc(currentUser.getId());
+            java.util.LinkedHashMap<Long, Message> conversations = new java.util.LinkedHashMap<>();
+            sent.forEach(msg -> conversations.putIfAbsent(msg.getId(), msg));
+            received.forEach(msg -> conversations.putIfAbsent(msg.getId(), msg));
+            return conversations.values().stream()
                     .map(msg -> MessageResponse.fromEntity(msg, false))
                     .collect(Collectors.toList());
         }
@@ -153,9 +169,12 @@ public class MessageService {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable: " + currentUsername));
 
             if (currentUser.getRole() != RoleType.ADMIN) {
-                if (message.getRecipient() == null || !message.getRecipient().getId().equals(currentUser.getId())) {
+                boolean isParticipant = message.getSender().getId().equals(currentUser.getId())
+                        || (message.getRecipient() != null
+                        && message.getRecipient().getId().equals(currentUser.getId()));
+                if (!isParticipant) {
                     throw new ResponseStatusException(HttpStatus.FORBIDDEN,
-                            "Accès refusé : vous ne pouvez lire que les messages dont vous êtes la cible.");
+                            "Accès refusé : vous ne pouvez lire que vos conversations.");
                 }
             }
         }

@@ -190,13 +190,9 @@ public struct LoginView: View {
                     SecureField("Mot de passe", text: $viewModel.regPassword)
                 }
                 
-                Section(header: Text("Rôle dans l'entreprise")) {
-                    Picker("Rôle", selection: $viewModel.regRole) {
-                        ForEach(Role.allCases) { role in
-                            Text(role.displayName).tag(role)
-                        }
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
+                Section(header: Text("Rôle du compte")) {
+                    Text("Salarié")
+                        .foregroundColor(.secondary)
                 }
                 
                 Section(footer: Text("En créant un compte, vous acceptez les modalités de modération et d'analyse IA des messages conformément au règlement intérieur.")) {

@@ -44,6 +44,19 @@ public class DataInitializer {
             if (StringUtils.hasText(bobPassword)) {
                 initUserIfNotExists(userRepository, passwordEncoder, "bob", bobPassword, RoleType.EMPLOYEE, "Bob Durand");
             }
+
+            userRepository.findByUsername("manager_dupont").ifPresent(manager ->
+                    userRepository.findByUsername("alice").ifPresent(alice -> {
+                        alice.setManager(manager);
+                        userRepository.save(alice);
+                    })
+            );
+            userRepository.findByUsername("manager_dupont").ifPresent(manager ->
+                    userRepository.findByUsername("bob").ifPresent(bob -> {
+                        bob.setManager(manager);
+                        userRepository.save(bob);
+                    })
+            );
         };
     }
 

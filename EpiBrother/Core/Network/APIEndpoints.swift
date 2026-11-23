@@ -20,12 +20,15 @@ public enum APIEndpoint {
     case login
     case register
     case me
+    case logout
     
     // Users
     case getUsers
     case getUser(id: Int64)
     case createUser
     case updateUserRole(id: Int64)
+    case updateUserManager(id: Int64)
+    case updateProfile
     case deleteUser(id: Int64)
     
     // Admin
@@ -51,6 +54,8 @@ public enum APIEndpoint {
             return "/api/auth/register"
         case .me:
             return "/api/auth/me"
+        case .logout:
+            return "/api/auth/logout"
             
         case .getUsers:
             return "/api/users"
@@ -60,6 +65,10 @@ public enum APIEndpoint {
             return "/api/users"
         case .updateUserRole(let id):
             return "/api/users/\(id)/role"
+        case .updateUserManager(let id):
+            return "/api/admin/users/\(id)/manager"
+        case .updateProfile:
+            return "/api/users/me"
         case .deleteUser(let id):
             return "/api/users/\(id)"
             
@@ -88,11 +97,11 @@ public enum APIEndpoint {
     
     public var method: HTTPMethod {
         switch self {
-        case .login, .register, .createUser, .sendMessage:
+        case .login, .register, .logout, .createUser, .sendMessage:
             return .post
         case .me, .getUsers, .getUser, .adminGetUsers, .getMessages, .getMessage, .getSignalements, .getSignalement:
             return .get
-        case .updateUserRole, .adminUpdateUserRole, .updateSignalementStatus:
+        case .updateUserRole, .updateUserManager, .updateProfile, .adminUpdateUserRole, .updateSignalementStatus:
             return .patch
         case .deleteUser, .adminDeleteUser:
             return .delete

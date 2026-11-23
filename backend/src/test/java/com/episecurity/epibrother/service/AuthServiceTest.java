@@ -83,7 +83,7 @@ class AuthServiceTest {
             return u;
         });
 
-        CreateUserRequest request = new CreateUserRequest("test_charlie", TEST_CREDENTIAL, RoleType.EMPLOYEE, "Charlie Dubois");
+        CreateUserRequest request = new CreateUserRequest("test_charlie", TEST_CREDENTIAL, RoleType.ADMIN, "Charlie Dubois");
         AuthResponse response = authService.register(request);
 
         assertNotNull(response);
