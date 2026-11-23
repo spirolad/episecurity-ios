@@ -40,6 +40,8 @@ public class MessageService: MessageServiceProtocol {
         guard let token = secureStorage.getToken() else {
             throw APIError.unauthorized
         }
+
+        let analysis = MessageAnalysisDetector.analyze(content)
         
         let processedContent: String
         if encrypt {
@@ -52,7 +54,10 @@ public class MessageService: MessageServiceProtocol {
         let body = SendMessageDTO(
             senderId: currentUser?.id,
             recipientId: recipientId,
-            content: processedContent
+            content: processedContent,
+            flaggedByAi: analysis.isFlagged,
+            analysisReason: analysis.reason,
+            analysisSeverity: analysis.severity
         )
         
         let sentMessage: Message = try await networkClient.execute(
