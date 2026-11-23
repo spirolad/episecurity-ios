@@ -135,3 +135,20 @@ afin de pouvoir gérer les communications.
 **En tant qu’administrateur,**
 je veux pouvoir affecter des salariés à un manager,
 afin qu’il puisse gérer les problèmes de son équipe.
+
+### Choix technologie de cryptage
+
+**Le Chiffrement Symétrique de Transport**
+Une fois que les clés de session ont été négociées par le protocole d'établissement, le message lui-même est chiffré à l'aide d'algorithmes de chiffrement symétrique.   
+
+Applications d'exemples : Presque toutes les messageries E2EE (Signal, WhatsApp, Telegram pour les "Chats Secrets").
+
+Comment ça fonctionne : L'appareil de l'expéditeur brouille le message en utilisant une clé secrète unique et un algorithme rapide (le plus souvent AES-256 en mode GCM ou ChaCha20-Poly1305). Le destinataire utilise exactement la même clé pour déchiffrer.   
+
+Points positifs :
+Extrêmement rapide et économe en batterie pour les smartphones.
+Mise en place facile.
+Très haut niveau de sécurité mathématique.
+
+Points négatifs :
+Ne gère pas à lui seul l'échange de clés : si la clé secrète est interceptée au départ, tout le système s'effondre (d'où l'obligation de l'associer à un protocole d'échange comme X3DH).
