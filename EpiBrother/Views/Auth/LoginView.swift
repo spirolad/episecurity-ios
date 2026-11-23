@@ -108,21 +108,6 @@ public struct LoginView: View {
                         .cornerRadius(16)
                         .padding(.horizontal)
                         .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 5)
-                        
-                        // Informations légales
-                        VStack(spacing: 14) {
-                            Button(action: {
-                                viewModel.showLegalNotice = true
-                            }) {
-                                HStack(spacing: 4) {
-                                    Image(systemName: "info.circle")
-                                    Text("Notice légale & Détection IA (RGPD / CNIL)")
-                                }
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            }
-                        }
-                        .padding(.top, 8)
                     }
                     .padding(.bottom, 30)
                 }
@@ -130,9 +115,6 @@ public struct LoginView: View {
             .navigationBarHidden(true)
             .sheet(isPresented: $viewModel.showRegisterSheet) {
                 registerSheetView
-            }
-            .sheet(isPresented: $viewModel.showLegalNotice) {
-                LegalNoticeView()
             }
         }
     }

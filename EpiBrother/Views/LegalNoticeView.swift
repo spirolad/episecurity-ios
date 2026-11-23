@@ -110,6 +110,7 @@ public struct LegalNoticeView: View {
             .navigationTitle("Information & Confidentialité")
             .navigationBarTitleDisplayMode(.inline)
         }
+        .interactiveDismissDisabled(true)
     }
     
     private func bulletPoint(title: String, desc: String) -> some View {

@@ -23,9 +23,6 @@ public class LoginViewModel: ObservableObject {
     @Published public var regFullName = ""
     @Published public var regRole: Role = .employee
     
-    // Information légale (RGPD / CNIL)
-    @Published public var showLegalNotice = false
-    
     private let authService: AuthService
     public init(
         authService: AuthService = AuthService.shared
