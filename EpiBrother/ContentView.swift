@@ -17,9 +17,7 @@ struct ContentView: View {
             if authService.isAuthenticated, let user = authService.currentUser {
                 authenticatedTabView(for: user)
                     .onAppear {
-                        if !SecureStorageService.shared.hasAcceptedLegalNotice {
-                            showingInitialLegalNotice = true
-                        }
+                        showingInitialLegalNotice = true
                     }
             } else {
                 LoginView()
