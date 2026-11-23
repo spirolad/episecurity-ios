@@ -109,13 +109,6 @@ public struct LegalNoticeView: View {
             }
             .navigationTitle("Information & Confidentialité")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Fermer") {
-                        dismiss()
-                    }
-                }
-            }
         }
     }
     
