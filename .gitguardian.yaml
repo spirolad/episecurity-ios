@@ -1,0 +1,14 @@
+version: 2
+
+secret:
+  ignored_paths:
+    - '.env.docker.example'
+    - '.env.example'
+    - '**/*.example'
+  ignored_matches:
+    - name: "jwt-token-secret-example"
+      match: "epibrotherProductionGradeSecureJwtTokenSecretKey2026WithMinimum256BitsOfEntropy!"
+    - name: "default-admin-password-example"
+      match: "admin123"
+    - name: "postgres-password-example"
+      match: "postgres"
