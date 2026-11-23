@@ -1,0 +1,13 @@
+package com.episecurity.epibrother.repository;
+
+import com.episecurity.epibrother.model.entity.Signalement;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface SignalementRepository extends JpaRepository<Signalement, Long> {
+    List<Signalement> findAllByOrderByCreatedAtDesc();
+    List<Signalement> findByStatusOrderByCreatedAtDesc(String status);
+}
