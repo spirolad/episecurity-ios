@@ -88,6 +88,36 @@ class RolePermissionLogicTest {
     }
 
     @Test
+    void testEmployee_CanSendMessageToManager() {
+        SendMessageRequest request = new SendMessageRequest(3L, 2L, "Bonjour manager !");
+
+        when(messageRepository.save(any(Message.class))).thenAnswer(invocation -> {
+            Message m = invocation.getArgument(0);
+            m.setId(102L);
+            return m;
+        });
+
+        MessageResponse response = messageService.sendMessage(request, "alice");
+
+        assertEquals(102L, response.getId());
+    }
+
+    @Test
+    void testEmployee_CanSendMessageToAdmin() {
+        SendMessageRequest request = new SendMessageRequest(3L, 1L, "Bonjour administrateur !");
+
+        when(messageRepository.save(any(Message.class))).thenAnswer(invocation -> {
+            Message m = invocation.getArgument(0);
+            m.setId(103L);
+            return m;
+        });
+
+        MessageResponse response = messageService.sendMessage(request, "alice");
+
+        assertEquals(103L, response.getId());
+    }
+
+    @Test
     void testEmployee_SendMessageWithoutRecipient_ThrowsBadRequest() {
         SendMessageRequest request = new SendMessageRequest(3L, null, "Message broadcast");
         assertThrows(ResponseStatusException.class, () -> messageService.sendMessage(request, "alice"));

@@ -77,14 +77,18 @@ public class MessageService {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Destinataire introuvable avec l'id: " + request.getRecipientId()));
         }
 
-        if (sender.getRole() == RoleType.EMPLOYEE
-                && (recipient == null
-                || recipient.getRole() != RoleType.EMPLOYEE
-                || recipient.getManager() == null
-                || sender.getManager() == null
-                || !recipient.getManager().getId().equals(sender.getManager().getId()))) {
+        boolean employeeCanContactRecipient = recipient != null
+                && (recipient.getRole() == RoleType.ADMIN
+                || (recipient.getRole() == RoleType.MANAGER
+                && sender.getManager() != null
+                && recipient.getId().equals(sender.getManager().getId()))
+                || (recipient.getRole() == RoleType.EMPLOYEE
+                && recipient.getManager() != null
+                && sender.getManager() != null
+                && recipient.getManager().getId().equals(sender.getManager().getId())));
+        if (sender.getRole() == RoleType.EMPLOYEE && !employeeCanContactRecipient) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,
-                    "Vous ne pouvez envoyer un message qu'à un collègue affecté au même manager.");
+                    "Vous ne pouvez envoyer un message qu'à un collègue de votre équipe, à votre manager ou à un administrateur.");
         }
 
         // 1. Sauvegarde du message
