@@ -4,7 +4,7 @@ EpiBrother est une solution de messagerie interne destinée aux entreprises. Son
 
 Lorsqu’un message est identifié comme potentiellement contraire aux règles établies par l’entreprise, il est automatiquement signalé au manager concerné afin qu’il puisse examiner la situation et prendre les mesures appropriées.
 
-L’application est disponible sur macOS.
+L’application cible iOS et iPadOS via Xcode.
 
 ## Découpage des responsabilités
 
@@ -39,75 +39,32 @@ Le projet sera découpé en cinq séances de quatre heures, chacune avec un back
   - Préparation à la soutenance finale
   - Démonstration en direct de l’application
 
-## Backlog
+## État du backlog
 
-* **Authentification**
-  - [Frontend] Créer l’écran de connexion - À faire
-  - [Frontend] Gérer les erreurs d’identification et afficher les messages appropriés - À faire
-  - [Frontend] Conserver la session de l’utilisateur connecté - À faire
-  - [Frontend] Permettre la déconnexion - À faire
-  - [Backend] Créer le service d’authentification - À faire
-  - [Backend] Vérifier les identifiants de l’utilisateur - À faire
-  - [Backend] Générer et valider le jeton de session - À faire
-  - [Backend] Révoquer la session lors de la déconnexion - À faire
-  - [Backend] Contrôler les accès selon le rôle de l’utilisateur - À faire
+* **Authentification — ✅ Terminé**
+  - [Frontend] Connexion, affichage des erreurs, restauration de session et déconnexion
+  - [Backend] Authentification, validation JWT, révocation des jetons et contrôle d’accès par rôle
 
-* **Envoi de messages entre utilisateurs**
-  - Chiffrement des messages
-    - [Frontend] Chiffrer le message au moment de l’envoi - À faire
-    - [Frontend] Déchiffrer le message au moment de la réception - À faire
-    - [Backend] Service pour générer les clés de chiffrement - À faire
-  - Chat entre collègues
-    - [Frontend] Envoyer des messages aux collègues ayant le même manager - À faire
-    - [Frontend] Afficher la liste des collègues - À faire
-    - [Frontend] Afficher l’historique des conversations - À faire
-    - [Backend] Service pour récupérer la liste des collègues - À faire
-    - [Backend] Service pour récupérer la liste des messages chiffrés - À faire
-    - [Backend] Service pour transmettre les messages aux destinataires - À faire
-  - Analyse par intelligence artificielle
-    - [Backend] Créer un service d’analyse - À faire
-    - [Backend] Ajouter un modèle d’IA pour analyser les messages - À faire
-    - [Backend] Stocker les messages jugés problématiques par l’IA - À faire
+* **Envoi de messages — ✅ Fonctionnel**
+  - [Frontend] Chiffrement AES-GCM local, déchiffrement à l’affichage, liste des collègues et historique
+  - [Backend] Contrôle des collègues d’un même manager, stockage et transmission des messages
+  - **Limite :** la clé AES est stockée dans le trousseau de chaque appareil ; le chiffrement n’est donc pas encore un chiffrement de bout en bout inter-appareils.
 
-* **Compte utilisateur**
-  - Gestion des comptes utilisateurs
-    - [Frontend] Afficher le formulaire de création d’un compte utilisateur - À faire
-    - [Frontend] Permettre la modification des informations du profil - À faire
-    - [Frontend] Afficher la liste des utilisateurs - À faire
-    - [Backend] Créer un compte utilisateur - À faire
-    - [Backend] Modifier les informations du profil - À faire
-    - [Backend] Récupérer la liste des utilisateurs - À faire
-  - Gestion des rôles
-    - [Frontend] Permettre à l’administrateur de choisir le rôle d’un utilisateur - À faire
-    - [Frontend] Adapter l’affichage des fonctionnalités selon le rôle - À faire
-    - [Backend] Attribuer un rôle utilisateur : salarié, manager ou administrateur - À faire
+* **Analyse par intelligence artificielle — ⚠️ Partiel**
+  - [Backend] Service heuristique DLP/toxicité, création et stockage des signalements
+  - **Limite :** aucun modèle IA/LLM n’est branché et les messages préfixés `ENC:` sont volontairement ignorés par l’analyse backend.
 
-* **Gestion des équipes**
-  - [Frontend] Afficher l’affectation des salariés aux managers - À faire
-  - [Frontend] Permettre à l’administrateur d’affecter un salarié à un manager - À faire
-  - [Frontend] Permettre à l’administrateur de modifier une affectation - À faire
-  - [Backend] Affecter un salarié à un manager - À faire
-  - [Backend] Récupérer les salariés associés à un manager - À faire
-  - [Backend] Modifier l’affectation d’un salarié - À faire
+* **Comptes, rôles et équipes — ✅ Terminé**
+  - [Frontend] Création de comptes, modification du profil, annuaire, rôles et affectation à un manager
+  - [Backend] Création/modification/suppression, rôles et affectations manager/salarié
 
-* **Messages problématiques**
-  - Consultation des messages
-    - [Frontend] Lister les messages signalés pour un manager - À faire
-    - [Frontend] Afficher le contenu d’un message signalé - À faire
-    - [Frontend] Afficher la raison et le niveau de problématicité détectés - À faire
-    - [Backend] Récupérer les messages signalés pour un manager - À faire
-    - [Backend] Fournir les détails d’un signalement - À faire
-  - Gestion des signalements
-    - [Frontend] Permettre au manager de prendre en charge un signalement - À faire
-    - [Frontend] Permettre au manager de clôturer un signalement - À faire
-    - [Backend] Notifier automatiquement le manager concerné - À faire
-    - [Backend] Mettre à jour l’état d’un signalement - À faire
+* **Messages problématiques — ✅ Fonctionnel**
+  - [Frontend] Liste, détail, motif, sévérité, prise en charge, clôture et classement sans suite
+  - [Backend] Filtrage par équipe, détail autorisé, mise à jour des statuts et protection des signalements d’une autre équipe
+  - **Limite :** le service de notification push/WebSocket est encore un squelette ; l’actualisation se fait par chargement manuel ou rafraîchissement de l’écran.
 
-* **Information légale**
-  - Information du salarié sur le traitement des messages
-    - [Frontend] Afficher une information lors de l’inscription ou de la première connexion - À faire
-    - [Frontend] Présenter les données collectées et analysées - À faire
-    - [Frontend] Expliquer les modalités de signalement des messages - À faire
+* **Information légale — ✅ Terminé**
+  - [Frontend] Notice à la première connexion, données analysées, modalités de signalement et confirmation de lecture
 
 
 ## Scénario utilisateur

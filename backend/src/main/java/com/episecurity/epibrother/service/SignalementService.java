@@ -69,20 +69,52 @@ public class SignalementService {
     }
 
     public SignalementResponse getSignalementById(Long id) {
-        Signalement signalement = signalementRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Signalement introuvable avec l'id: " + id));
+        return getSignalementById(id, null);
+    }
+
+    public SignalementResponse getSignalementById(Long id, String username) {
+        Signalement signalement = findAuthorizedSignalement(id, username);
         return SignalementResponse.fromEntity(signalement);
     }
 
     public SignalementResponse updateStatus(Long id, String newStatus) {
+        return updateStatus(id, newStatus, null);
+    }
+
+    public SignalementResponse updateStatus(Long id, String newStatus, String username) {
         if (newStatus == null || !VALID_STATUSES.contains(newStatus.toUpperCase())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Statut de signalement invalide.");
         }
-        Signalement signalement = signalementRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Signalement introuvable avec l'id: " + id));
+        Signalement signalement = findAuthorizedSignalement(id, username);
 
         signalement.setStatus(newStatus.toUpperCase());
         Signalement updated = signalementRepository.save(signalement);
         return SignalementResponse.fromEntity(updated);
+    }
+
+    private Signalement findAuthorizedSignalement(Long id, String username) {
+        Signalement signalement = signalementRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Signalement introuvable avec l'id: " + id));
+
+        if (username == null || username.isBlank()) {
+            return signalement;
+        }
+
+        User current = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
+
+        if (current.getRole() == RoleType.ADMIN) {
+            return signalement;
+        }
+
+        boolean belongsToManager = signalement.getMessage() != null
+                && signalement.getMessage().getSender() != null
+                && signalement.getMessage().getSender().getManager() != null
+                && signalement.getMessage().getSender().getManager().getId().equals(current.getId());
+        if (!belongsToManager) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                    "Accès refusé : ce signalement ne concerne pas votre équipe.");
+        }
+        return signalement;
     }
 }
