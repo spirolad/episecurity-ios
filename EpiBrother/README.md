@@ -42,72 +42,72 @@ Le projet sera découpé en cinq séances de quatre heures, chacune avec un back
 ## Backlog
 
 * **Authentification**
-  - [Frontend] Créer l’écran de connexion - À faire
-  - [Frontend] Gérer les erreurs d’identification et afficher les messages appropriés - À faire
-  - [Frontend] Conserver la session de l’utilisateur connecté - À faire
-  - [Frontend] Permettre la déconnexion - À faire
-  - [Backend] Créer le service d’authentification - À faire
-  - [Backend] Vérifier les identifiants de l’utilisateur - À faire
-  - [Backend] Générer et valider le jeton de session - À faire
-  - [Backend] Révoquer la session lors de la déconnexion - À faire
-  - [Backend] Contrôler les accès selon le rôle de l’utilisateur - À faire
+  - [Frontend] Créer l’écran de connexion - Terminé
+  - [Frontend] Gérer les erreurs d’identification et afficher les messages appropriés - Terminé
+  - [Frontend] Conserver la session de l’utilisateur connecté - Terminé
+  - [Frontend] Permettre la déconnexion - Terminé
+  - [Backend] Créer le service d’authentification - Terminé
+  - [Backend] Vérifier les identifiants de l’utilisateur - Terminé
+  - [Backend] Générer et valider le jeton de session - Terminé
+  - [Backend] Révoquer la session lors de la déconnexion - Terminé
+  - [Backend] Contrôler les accès selon le rôle de l’utilisateur - Terminé
 
 * **Envoi de messages entre utilisateurs**
   - Chiffrement des messages
-    - [Frontend] Chiffrer le message au moment de l’envoi - À faire
-    - [Frontend] Déchiffrer le message au moment de la réception - À faire
+    - [Frontend] Chiffrer le message au moment de l’envoi - Terminé
+    - [Frontend] Déchiffrer le message au moment de la réception - Terminé
     - [Backend] Service pour générer les clés de chiffrement - À faire
   - Chat entre collègues
-    - [Frontend] Envoyer des messages aux collègues ayant le même manager - À faire
-    - [Frontend] Afficher la liste des collègues - À faire
-    - [Frontend] Afficher l’historique des conversations - À faire
-    - [Backend] Service pour récupérer la liste des collègues - À faire
-    - [Backend] Service pour récupérer la liste des messages chiffrés - À faire
-    - [Backend] Service pour transmettre les messages aux destinataires - À faire
+    - [Frontend] Envoyer des messages aux collègues ayant le même manager - Terminé
+    - [Frontend] Afficher la liste des collègues - Terminé
+    - [Frontend] Afficher l’historique des conversations - Terminé
+    - [Backend] Service pour récupérer la liste des collègues - Terminé
+    - [Backend] Service pour récupérer la liste des messages chiffrés - Terminé
+    - [Backend] Service pour transmettre les messages aux destinataires - Terminé
   - Analyse par intelligence artificielle
-    - [Backend] Créer un service d’analyse - À faire
+    - [Backend] Créer un service d’analyse - Terminé
     - [Backend] Ajouter un modèle d’IA pour analyser les messages - À faire
-    - [Backend] Stocker les messages jugés problématiques par l’IA - À faire
+    - [Backend] Stocker les messages jugés problématiques par l’IA - Terminé
 
 * **Compte utilisateur**
   - Gestion des comptes utilisateurs
-    - [Frontend] Afficher le formulaire de création d’un compte utilisateur - À faire
-    - [Frontend] Permettre la modification des informations du profil - À faire
-    - [Frontend] Afficher la liste des utilisateurs - À faire
-    - [Backend] Créer un compte utilisateur - À faire
-    - [Backend] Modifier les informations du profil - À faire
-    - [Backend] Récupérer la liste des utilisateurs - À faire
+    - [Frontend] Afficher le formulaire de création d’un compte utilisateur - Terminé
+    - [Frontend] Permettre la modification des informations du profil - Terminé
+    - [Frontend] Afficher la liste des utilisateurs - Terminé
+    - [Backend] Créer un compte utilisateur - Terminé
+    - [Backend] Modifier les informations du profil - Terminé
+    - [Backend] Récupérer la liste des utilisateurs - Terminé
   - Gestion des rôles
-    - [Frontend] Permettre à l’administrateur de choisir le rôle d’un utilisateur - À faire
-    - [Frontend] Adapter l’affichage des fonctionnalités selon le rôle - À faire
-    - [Backend] Attribuer un rôle utilisateur : salarié, manager ou administrateur - À faire
+    - [Frontend] Permettre à l’administrateur de choisir le rôle d’un utilisateur - Terminé
+    - [Frontend] Adapter l’affichage des fonctionnalités selon le rôle - Terminé
+    - [Backend] Attribuer un rôle utilisateur : salarié, manager ou administrateur - Terminé
 
 * **Gestion des équipes**
-  - [Frontend] Afficher l’affectation des salariés aux managers - À faire
-  - [Frontend] Permettre à l’administrateur d’affecter un salarié à un manager - À faire
-  - [Frontend] Permettre à l’administrateur de modifier une affectation - À faire
-  - [Backend] Affecter un salarié à un manager - À faire
-  - [Backend] Récupérer les salariés associés à un manager - À faire
-  - [Backend] Modifier l’affectation d’un salarié - À faire
+  - [Frontend] Afficher l’affectation des salariés aux managers - Terminé
+  - [Frontend] Permettre à l’administrateur d’affecter un salarié à un manager - Terminé
+  - [Frontend] Permettre à l’administrateur de modifier une affectation - Terminé
+  - [Backend] Affecter un salarié à un manager - Terminé
+  - [Backend] Récupérer les salariés associés à un manager - Terminé
+  - [Backend] Modifier l’affectation d’un salarié - Terminé
 
 * **Messages problématiques**
   - Consultation des messages
-    - [Frontend] Lister les messages signalés pour un manager - À faire
-    - [Frontend] Afficher le contenu d’un message signalé - À faire
-    - [Frontend] Afficher la raison et le niveau de problématicité détectés - À faire
-    - [Backend] Récupérer les messages signalés pour un manager - À faire
-    - [Backend] Fournir les détails d’un signalement - À faire
+    - [Frontend] Lister les messages signalés pour un manager - Terminé
+    - [Frontend] Afficher le contenu d’un message signalé - Terminé
+    - [Frontend] Afficher la raison et le niveau de problématicité détectés - Terminé
+    - [Backend] Récupérer les messages signalés pour un manager - Terminé
+    - [Backend] Fournir les détails d’un signalement - Terminé
   - Gestion des signalements
-    - [Frontend] Permettre au manager de prendre en charge un signalement - À faire
-    - [Frontend] Permettre au manager de clôturer un signalement - À faire
+    - [Frontend] Permettre au manager de prendre en charge un signalement - Terminé
+    - [Frontend] Permettre au manager de clôturer un signalement - Terminé
     - [Backend] Notifier automatiquement le manager concerné - À faire
-    - [Backend] Mettre à jour l’état d’un signalement - À faire
+    - [Backend] Mettre à jour l’état d’un signalement - Terminé
 
 * **Information légale**
   - Information du salarié sur le traitement des messages
-    - [Frontend] Afficher une information lors de l’inscription ou de la première connexion - À faire
-    - [Frontend] Présenter les données collectées et analysées - À faire
-    - [Frontend] Expliquer les modalités de signalement des messages - À faire
+    - [Frontend] Afficher une information lors de l’inscription ou de la première connexion - Terminé
+    - [Frontend] Présenter les données collectées et analysées - Terminé
+    - [Frontend] Expliquer les modalités de signalement des messages - Terminé
 
 
 ## Scénario utilisateur
