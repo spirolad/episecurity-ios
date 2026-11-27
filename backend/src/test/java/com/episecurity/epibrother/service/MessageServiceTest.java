@@ -1,6 +1,7 @@
 package com.episecurity.epibrother.service;
 
 import com.episecurity.epibrother.ai.AiAnalysisService;
+import com.episecurity.epibrother.ai.AiAnalysisResult;
 import com.episecurity.epibrother.dto.request.SendMessageRequest;
 import com.episecurity.epibrother.dto.response.MessageResponse;
 import com.episecurity.epibrother.model.entity.Message;
@@ -34,7 +35,8 @@ class MessageServiceTest {
         messageRepository = mock(MessageRepository.class);
         userRepository = mock(UserRepository.class);
         signalementRepository = mock(SignalementRepository.class);
-        aiAnalysisService = new AiAnalysisService();
+        aiAnalysisService = mock(AiAnalysisService.class);
+        when(aiAnalysisService.analyze(anyString())).thenReturn(AiAnalysisResult.clean());
 
         messageService = new MessageService(
                 messageRepository,
@@ -74,7 +76,7 @@ class MessageServiceTest {
     }
 
     @Test
-    void testSendMessage_WithEpitaKeyword_ShouldCreateSignalement() {
+    void testSendMessage_UsesServerAnalysisResultToCreateSignalement() {
         User sender = new User("alice", RoleType.EMPLOYEE, "Alice Martin");
         sender.setId(1L);
 
@@ -98,7 +100,9 @@ class MessageServiceTest {
             return s;
         });
 
-        SendMessageRequest request = new SendMessageRequest(1L, 2L, "Retrouvons-nous demain matin devant l'école Epita.");
+        when(aiAnalysisService.analyze("You are worthless and should leave this team."))
+                .thenReturn(AiAnalysisResult.flagged("AI moderation (harassment): Targeted abuse", "HIGH", 0.91));
+        SendMessageRequest request = new SendMessageRequest(1L, 2L, "You are worthless and should leave this team.");
         MessageResponse response = messageService.sendMessage(request);
 
         assertNotNull(response);
@@ -111,7 +115,7 @@ class MessageServiceTest {
         Signalement captured = captor.getValue();
         assertEquals("HIGH", captured.getSeverity());
         assertEquals("PENDING", captured.getStatus());
-        assertTrue(captured.getReason().contains("Epita"));
+        assertTrue(captured.getReason().contains("harassment"));
         assertEquals(11L, captured.getMessage().getId());
     }
 
@@ -142,10 +146,10 @@ class MessageServiceTest {
         SendMessageRequest request = new SendMessageRequest(
                 1L,
                 2L,
-                "ENC:Y2lwaGVydGV4dA==",
-                true,
-                "Analyse IA (DLP) : mot sensible détecté",
-                "HIGH");
+                "ENC:Y2lwaGVydGV4dA==");
+        request.setAnalysisContent("actual workplace threat");
+        when(aiAnalysisService.analyze("actual workplace threat"))
+                .thenReturn(AiAnalysisResult.flagged("AI moderation (threat_or_violence): Threat detected", "HIGH", 0.93));
 
         MessageResponse response = messageService.sendMessage(request);
 
@@ -153,6 +157,18 @@ class MessageServiceTest {
         ArgumentCaptor<Signalement> captor = ArgumentCaptor.forClass(Signalement.class);
         verify(signalementRepository, times(1)).save(captor.capture());
         assertEquals("HIGH", captor.getValue().getSeverity());
-        assertTrue(captor.getValue().getReason().contains("DLP"));
+        assertTrue(captor.getValue().getReason().contains("threat_or_violence"));
+        verify(aiAnalysisService).analyze("actual workplace threat");
+    }
+
+    @Test
+    void analyzeMessageReturnsServerClassification() {
+        AiAnalysisResult expected = AiAnalysisResult.flagged("AI moderation (harassment): Targeted abuse", "HIGH", 0.91);
+        when(aiAnalysisService.analyze("targeted abusive text")).thenReturn(expected);
+
+        AiAnalysisResult result = messageService.analyzeMessage("targeted abusive text");
+
+        assertEquals(expected, result);
+        verify(aiAnalysisService).analyze("targeted abusive text");
     }
 }

@@ -1,6 +1,7 @@
 package com.episecurity.epibrother.service;
 
 import com.episecurity.epibrother.ai.AiAnalysisService;
+import com.episecurity.epibrother.ai.AiAnalysisResult;
 import com.episecurity.epibrother.dto.request.SendMessageRequest;
 import com.episecurity.epibrother.dto.response.MessageResponse;
 import com.episecurity.epibrother.model.entity.Message;
@@ -38,7 +39,8 @@ class RolePermissionLogicTest {
         messageRepository = mock(MessageRepository.class);
         userRepository = mock(UserRepository.class);
         signalementRepository = mock(SignalementRepository.class);
-        aiAnalysisService = new AiAnalysisService();
+        aiAnalysisService = mock(AiAnalysisService.class);
+        when(aiAnalysisService.analyze(anyString())).thenReturn(AiAnalysisResult.clean());
 
         messageService = new MessageService(
                 messageRepository,

@@ -1,5 +1,7 @@
 package com.episecurity.epibrother.controller;
 
+import com.episecurity.epibrother.ai.AiAnalysisResult;
+import com.episecurity.epibrother.dto.request.AnalyzeMessageRequest;
 import com.episecurity.epibrother.dto.request.SendMessageRequest;
 import com.episecurity.epibrother.dto.response.MessageResponse;
 import com.episecurity.epibrother.service.MessageService;
@@ -21,6 +23,11 @@ public class MessageController {
 
     public MessageController(MessageService messageService) {
         this.messageService = messageService;
+    }
+
+    @PostMapping("/analyze")
+    public ResponseEntity<AiAnalysisResult> analyzeMessage(@Valid @RequestBody AnalyzeMessageRequest request) {
+        return ResponseEntity.ok(messageService.analyzeMessage(request.getContent()));
     }
 
     /**
