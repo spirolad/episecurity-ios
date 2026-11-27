@@ -11,9 +11,7 @@ public class SendMessageRequest {
     @NotBlank(message = "Le contenu du message ne peut pas être vide")
     private String content;
 
-    private boolean flaggedByAi;
-    private String analysisReason;
-    private String analysisSeverity;
+    private String analysisContent;
 
     public SendMessageRequest() {
     }
@@ -29,20 +27,6 @@ public class SendMessageRequest {
         this.content = content;
     }
 
-    public SendMessageRequest(
-            Long senderId,
-            Long recipientId,
-            String content,
-            boolean flaggedByAi,
-            String analysisReason,
-            String analysisSeverity) {
-        this.senderId = senderId;
-        this.recipientId = recipientId;
-        this.content = content;
-        this.flaggedByAi = flaggedByAi;
-        this.analysisReason = analysisReason;
-        this.analysisSeverity = analysisSeverity;
-    }
 
     public Long getSenderId() {
         return senderId;
@@ -68,27 +52,12 @@ public class SendMessageRequest {
         this.content = content;
     }
 
-    public boolean isFlaggedByAi() {
-        return flaggedByAi;
+    public String getAnalysisContent() {
+        return analysisContent;
     }
 
-    public void setFlaggedByAi(boolean flaggedByAi) {
-        this.flaggedByAi = flaggedByAi;
+    public void setAnalysisContent(String analysisContent) {
+        this.analysisContent = analysisContent;
     }
 
-    public String getAnalysisReason() {
-        return analysisReason;
-    }
-
-    public void setAnalysisReason(String analysisReason) {
-        this.analysisReason = analysisReason;
-    }
-
-    public String getAnalysisSeverity() {
-        return analysisSeverity;
-    }
-
-    public void setAnalysisSeverity(String analysisSeverity) {
-        this.analysisSeverity = analysisSeverity;
-    }
 }

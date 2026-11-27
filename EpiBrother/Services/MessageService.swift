@@ -41,8 +41,15 @@ public class MessageService: MessageServiceProtocol {
             throw APIError.unauthorized
         }
 
-        let analysis = MessageAnalysisDetector.analyze(content)
-        
+        let analysis: MessageAnalysisDTO = try await networkClient.execute(
+            endpoint: .analyzeMessage,
+            body: AnalyzeMessageDTO(content: content),
+            token: token
+        )
+        if analysis.flagged {
+            throw APIError.badRequest(analysis.reason ?? "Le message a été signalé par la modération IA.")
+        }
+
         let processedContent: String
         if encrypt {
             processedContent = try cryptoManager.encrypt(plainText: content)
@@ -55,9 +62,7 @@ public class MessageService: MessageServiceProtocol {
             senderId: currentUser?.id,
             recipientId: recipientId,
             content: processedContent,
-            flaggedByAi: analysis.isFlagged,
-            analysisReason: analysis.reason,
-            analysisSeverity: analysis.severity
+            analysisContent: encrypt ? content : nil
         )
         
         let sentMessage: Message = try await networkClient.execute(

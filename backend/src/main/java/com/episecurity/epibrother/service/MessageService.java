@@ -91,32 +91,21 @@ public class MessageService {
                     "Vous ne pouvez envoyer un message qu'à un collègue de votre équipe, à votre manager ou à un administrateur.");
         }
 
+        AiAnalysisResult analysisResult = analyzeMessage(request);
+
         // 1. Sauvegarde du message
         Message message = new Message(sender, recipient, request.getContent());
         Message savedMessage = messageRepository.save(message);
         log.info("Message id={} enregistré avec succès (expéditeur: {})", savedMessage.getId(), sender.getUsername());
 
-        // Le texte peut être chiffré côté client. Le frontend fournit donc le résultat
-        // de l'analyse effectuée avant chiffrement.
-        AiAnalysisResult analysisResult = request.isFlaggedByAi()
-                ? AiAnalysisResult.flagged(
-                        request.getAnalysisReason(),
-                        request.getAnalysisSeverity(),
-                        0.95)
-                : aiAnalysisService.analyze(savedMessage.getContent());
-
         boolean flagged = analysisResult.isFlagged();
         if (flagged) {
-            String reason = request.isFlaggedByAi()
-                    ? request.getAnalysisReason()
-                    : analysisResult.getReason();
+            String reason = analysisResult.getReason();
             if (reason == null || reason.isBlank()) {
-                reason = "Analyse IA côté client : comportement potentiellement problématique détecté";
+                reason = "AI moderation flagged this message for review";
             }
 
-            String severity = request.isFlaggedByAi()
-                    ? request.getAnalysisSeverity()
-                    : analysisResult.getSeverity();
+            String severity = analysisResult.getSeverity();
             if (!"HIGH".equalsIgnoreCase(severity) && !"MEDIUM".equalsIgnoreCase(severity)
                     && !"LOW".equalsIgnoreCase(severity)) {
                 severity = "HIGH";
@@ -137,6 +126,25 @@ public class MessageService {
         }
 
         return MessageResponse.fromEntity(savedMessage, flagged);
+    }
+
+    private AiAnalysisResult analyzeMessage(SendMessageRequest request) {
+        String content = request.getContent();
+        if (content != null && content.startsWith("ENC:")) {
+            String analysisContent = request.getAnalysisContent();
+            if (analysisContent == null || analysisContent.isBlank()) {
+                return AiAnalysisResult.flagged(
+                        "Encrypted message was not submitted for AI moderation; manual review required",
+                        "MEDIUM",
+                        0.0);
+            }
+            return aiAnalysisService.analyze(analysisContent);
+        }
+        return aiAnalysisService.analyze(content);
+    }
+
+    public AiAnalysisResult analyzeMessage(String content) {
+        return aiAnalysisService.analyze(content);
     }
 
     public MessageResponse sendMessage(SendMessageRequest request) {

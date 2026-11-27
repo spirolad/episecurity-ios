@@ -59,23 +59,32 @@ public struct SendMessageDTO: Codable {
     public let senderId: Int64?
     public let recipientId: Int64
     public let content: String
-    public let flaggedByAi: Bool
-    public let analysisReason: String?
-    public let analysisSeverity: String?
+    public let analysisContent: String?
     
     public init(
         senderId: Int64? = nil,
         recipientId: Int64,
         content: String,
-        flaggedByAi: Bool = false,
-        analysisReason: String? = nil,
-        analysisSeverity: String? = nil
+        analysisContent: String? = nil
     ) {
         self.senderId = senderId
         self.recipientId = recipientId
         self.content = content
-        self.flaggedByAi = flaggedByAi
-        self.analysisReason = analysisReason
-        self.analysisSeverity = analysisSeverity
+        self.analysisContent = analysisContent
     }
+}
+
+public struct AnalyzeMessageDTO: Codable {
+    public let content: String
+
+    public init(content: String) {
+        self.content = content
+    }
+}
+
+public struct MessageAnalysisDTO: Decodable {
+    public let flagged: Bool
+    public let reason: String?
+    public let severity: String
+    public let confidenceScore: Double
 }

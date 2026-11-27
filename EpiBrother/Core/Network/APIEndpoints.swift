@@ -37,6 +37,7 @@ public enum APIEndpoint {
     case adminDeleteUser(id: Int64)
     
     // Messages
+    case analyzeMessage
     case sendMessage
     case getMessages
     case getMessage(id: Int64)
@@ -79,6 +80,8 @@ public enum APIEndpoint {
         case .adminDeleteUser(let id):
             return "/api/admin/users/\(id)"
             
+        case .analyzeMessage:
+            return "/api/messages/analyze"
         case .sendMessage:
             return "/api/messages"
         case .getMessages:
@@ -97,7 +100,7 @@ public enum APIEndpoint {
     
     public var method: HTTPMethod {
         switch self {
-        case .login, .register, .logout, .createUser, .sendMessage:
+        case .login, .register, .logout, .createUser, .analyzeMessage, .sendMessage:
             return .post
         case .me, .getUsers, .getUser, .adminGetUsers, .getMessages, .getMessage, .getSignalements, .getSignalement:
             return .get

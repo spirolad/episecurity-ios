@@ -20,6 +20,10 @@ jwt:
   expiration-ms: ${JWT_EXPIRATION_MS:86400000}
 
 app:
+  ai:
+    ollama:
+      base-url: ${APP_AI_OLLAMA_BASE_URL:http://localhost:11434}
+      model: ${APP_AI_OLLAMA_MODEL:qwen2.5:3b}
   seed:
     admin-password: ${DEFAULT_ADMIN_PASSWORD:}
     manager-password: ${DEFAULT_MANAGER_PASSWORD:}
