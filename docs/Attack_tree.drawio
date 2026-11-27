@@ -1,14 +1,14 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Page-1" id="MegNCjbqeZoOz9LO-DnC">
-    <mxGraphModel dx="1880" dy="646" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="3068" dy="1958" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="oIn7hYt4_QXqDvTs61C9-2" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;">
-          <mxGeometry relative="1" x="-0.1111" as="geometry">
+        <mxCell id="oIn7hYt4_QXqDvTs61C9-2" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="oIn7hYt4_QXqDvTs61C9-3">
+          <mxGeometry relative="1" x="-0.4077" as="geometry">
             <Array as="points">
               <mxPoint x="400" y="100" />
-              <mxPoint x="120" y="100" />
+              <mxPoint x="-300" y="100" />
             </Array>
             <mxPoint x="120" y="160" as="targetPoint" />
           </mxGeometry>
@@ -18,76 +18,172 @@
             <mxPoint x="400" y="160" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="oIn7hYt4_QXqDvTs61C9-6" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;">
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-19" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="ZDIspeCdBAFr9FAPyxUp-18">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="400" y="100" />
-              <mxPoint x="680" y="100" />
+              <mxPoint x="860" y="100" />
             </Array>
-            <mxPoint x="680" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-26" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="ZDIspeCdBAFr9FAPyxUp-25">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="100" />
+              <mxPoint x="1100" y="100" />
+            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="oIn7hYt4_QXqDvTs61C9-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Lire messages problematiques en clair" vertex="1">
           <mxGeometry height="60" width="120" x="340" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="oIn7hYt4_QXqDvTs61C9-9" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="120" y="280" as="targetPoint" />
+        <mxCell id="oIn7hYt4_QXqDvTs61C9-9" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="oIn7hYt4_QXqDvTs61C9-10">
+          <mxGeometry relative="1" x="-0.6667" as="geometry">
+            <mxPoint x="-300" y="280" as="targetPoint" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-4" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="ZDIspeCdBAFr9FAPyxUp-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="oIn7hYt4_QXqDvTs61C9-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Lire les messages via l&#39;application" vertex="1">
-          <mxGeometry height="60" width="120" x="60" y="160" as="geometry" />
+          <mxGeometry height="60" width="120" x="-360" y="160" as="geometry" />
         </mxCell>
         <mxCell id="oIn7hYt4_QXqDvTs61C9-18" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="oIn7hYt4_QXqDvTs61C9-19">
-          <mxGeometry relative="1" x="-0.5714" as="geometry">
+          <mxGeometry relative="1" x="-0.5161" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="250" />
+              <mxPoint x="160" y="250" />
+            </Array>
             <mxPoint x="400" y="280" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="oIn7hYt4_QXqDvTs61C9-23" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="oIn7hYt4_QXqDvTs61C9-22">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="oIn7hYt4_QXqDvTs61C9-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Recuperer les messages en les interceptants" vertex="1">
-          <mxGeometry height="60" width="120" x="340" y="160" as="geometry" />
-        </mxCell>
-        <mxCell id="oIn7hYt4_QXqDvTs61C9-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Recuperer les historiques de sauvegarde" vertex="1">
-          <mxGeometry height="60" width="120" x="620" y="160" as="geometry" />
-        </mxCell>
-        <mxCell id="oIn7hYt4_QXqDvTs61C9-11" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="120" y="400" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="oIn7hYt4_QXqDvTs61C9-13" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;">
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-15" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="ZDIspeCdBAFr9FAPyxUp-13">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="120" y="360" />
-              <mxPoint x="-40" y="360" />
+              <mxPoint x="400" y="250" />
+              <mxPoint x="640" y="250" />
             </Array>
-            <mxPoint x="-40" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oIn7hYt4_QXqDvTs61C9-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Recuperer les messages en les interceptants via le reseau interne" vertex="1">
+          <mxGeometry height="60" width="120" x="340" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-35" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="oIn7hYt4_QXqDvTs61C9-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-36" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="oIn7hYt4_QXqDvTs61C9-14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-420" y="360" />
+              <mxPoint x="-580" y="360" />
+            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="oIn7hYt4_QXqDvTs61C9-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Acces a un telephone de manager" vertex="1">
-          <mxGeometry height="60" width="120" x="60" y="280" as="geometry" />
+          <mxGeometry height="60" width="120" x="-480" y="280" as="geometry" />
         </mxCell>
         <mxCell id="oIn7hYt4_QXqDvTs61C9-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Telephone deverouille / Session ouverte" vertex="1">
-          <mxGeometry height="60" width="120" x="60" y="400" as="geometry" />
-        </mxCell>
-        <mxCell id="oIn7hYt4_QXqDvTs61C9-16" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-40" y="520" as="targetPoint" />
-          </mxGeometry>
+          <mxGeometry height="60" width="120" x="-480" y="390" as="geometry" />
         </mxCell>
         <mxCell id="oIn7hYt4_QXqDvTs61C9-14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Faire une demande a un admin de nous faire un compte" vertex="1">
-          <mxGeometry height="60" width="120" x="-100" y="400" as="geometry" />
+          <mxGeometry height="60" width="120" x="-640" y="390" as="geometry" />
         </mxCell>
-        <mxCell id="oIn7hYt4_QXqDvTs61C9-17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Social Engineering" vertex="1">
-          <mxGeometry height="60" width="120" x="-100" y="520" as="geometry" />
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-1" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZDIspeCdBAFr9FAPyxUp-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="255" y="400" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="oIn7hYt4_QXqDvTs61C9-19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Recuperer les messages avant le traitement IA" vertex="1">
-          <mxGeometry height="60" width="120" x="260" y="280" as="geometry" />
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-10" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="ZDIspeCdBAFr9FAPyxUp-9">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="oIn7hYt4_QXqDvTs61C9-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Recuperer les messages apres le traitement IA" vertex="1">
-          <mxGeometry height="60" width="120" x="425" y="280" as="geometry" />
+        <mxCell id="oIn7hYt4_QXqDvTs61C9-19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Exploiter Private chat -&amp;gt; IA -&amp;gt; DB" vertex="1">
+          <mxGeometry height="60" width="120" x="100" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-11" edge="1" parent="1" source="oIn7hYt4_QXqDvTs61C9-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZDIspeCdBAFr9FAPyxUp-12">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oIn7hYt4_QXqDvTs61C9-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Exploit Report Service" vertex="1">
+          <mxGeometry height="60" width="120" x="340" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Interception du flux vers Analyse IA" vertex="1">
+          <mxGeometry height="60" width="120" x="20" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-33" edge="1" parent="1" source="ZDIspeCdBAFr9FAPyxUp-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="ZDIspeCdBAFr9FAPyxUp-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-34" edge="1" parent="1" source="ZDIspeCdBAFr9FAPyxUp-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="ZDIspeCdBAFr9FAPyxUp-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Compromettre app iOs" vertex="1">
+          <mxGeometry height="60" width="120" x="-240" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Extraction locale" vertex="1">
+          <mxGeometry height="60" width="120" x="-320" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Interception avant chiffrement ou apres chiffrement" vertex="1">
+          <mxGeometry height="60" width="120" x="-160" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Lecture sortie de l&#39;IA" vertex="1">
+          <mxGeometry height="60" width="120" x="180" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Acces non autorise aux messages recupere par Report service" vertex="1">
+          <mxGeometry height="60" width="120" x="340" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-16" edge="1" parent="1" source="ZDIspeCdBAFr9FAPyxUp-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZDIspeCdBAFr9FAPyxUp-17">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="640" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Compromettre DB" vertex="1">
+          <mxGeometry height="60" width="120" x="580" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Vol d&#39;identifiant de DB" vertex="1">
+          <mxGeometry height="60" width="120" x="580" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-22" edge="1" parent="1" source="ZDIspeCdBAFr9FAPyxUp-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="ZDIspeCdBAFr9FAPyxUp-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Recuperer des historuques" vertex="1">
+          <mxGeometry height="60" width="120" x="800" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-24" edge="1" parent="1" source="ZDIspeCdBAFr9FAPyxUp-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="ZDIspeCdBAFr9FAPyxUp-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Sauvegarde appareil&lt;div&gt;/ Cloud&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="800" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-23" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Sauvegarde ou export de DB" vertex="1">
+          <mxGeometry height="60" width="120" x="800" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-27" edge="1" parent="1" source="ZDIspeCdBAFr9FAPyxUp-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZDIspeCdBAFr9FAPyxUp-28">
+          <mxGeometry relative="1" x="-0.0769" as="geometry">
+            <mxPoint x="1040" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-30" edge="1" parent="1" source="ZDIspeCdBAFr9FAPyxUp-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="ZDIspeCdBAFr9FAPyxUp-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-25" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Contourner / casser la chaine d&#39;Auth" vertex="1">
+          <mxGeometry height="60" width="120" x="1040" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-31" edge="1" parent="1" source="ZDIspeCdBAFr9FAPyxUp-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1030" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-28" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="compromission Auth" vertex="1">
+          <mxGeometry height="60" width="120" x="970" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-29" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Compromission des cle / echange cryptographique" vertex="1">
+          <mxGeometry height="60" width="120" x="1120" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDIspeCdBAFr9FAPyxUp-32" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Vol de cle&lt;div&gt;/&lt;/div&gt;&lt;div&gt;Faille d&#39;autorisation&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="970" y="390" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
