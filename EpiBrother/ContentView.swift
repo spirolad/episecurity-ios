@@ -16,11 +16,6 @@ struct ContentView: View {
         ZStack {
             if authService.isAuthenticated, let user = authService.currentUser {
                 authenticatedTabView(for: user)
-                    .onAppear {
-                        if !SecureStorageService.shared.hasAcceptedLegalNotice {
-                            showingInitialLegalNotice = true
-                        }
-                    }
             } else {
                 LoginView()
             }
@@ -60,6 +55,11 @@ struct ContentView: View {
                 showingInitialLegalNotice = false
             }
         }
+        .onChange(of: authService.isAuthenticated) { _, isAuthenticated in
+            if isAuthenticated {
+                showingInitialLegalNotice = true
+            }
+        }
         .task {
             _ = await authService.restoreSession()
         }
@@ -76,12 +76,6 @@ struct ContentView: View {
                         Label("Messages", systemImage: "bubble.left.and.bubble.right.fill")
                     }
                 
-                // 2. Information légale / Droits
-                LegalNoticeView()
-                    .tabItem {
-                        Label("Information légale", systemImage: "hand.raised.square.fill")
-                    }
-
                 ProfileView()
                     .tabItem {
                         Label("Profil", systemImage: "person.crop.circle")
@@ -100,12 +94,6 @@ struct ContentView: View {
                         Label("Messages", systemImage: "bubble.left.and.bubble.right.fill")
                     }
                 
-                // 3. Information légale
-                LegalNoticeView()
-                    .tabItem {
-                        Label("Information légale", systemImage: "hand.raised.square.fill")
-                    }
-
                 ProfileView()
                     .tabItem {
                         Label("Profil", systemImage: "person.crop.circle")
@@ -136,12 +124,6 @@ struct ContentView: View {
                         Label("Messages", systemImage: "bubble.left.and.bubble.right.fill")
                     }
                 
-                // 5. Notice de conformité CNIL
-                LegalNoticeView()
-                    .tabItem {
-                        Label("Conformité CNIL", systemImage: "hand.raised.square.fill")
-                    }
-
                 ProfileView()
                     .tabItem {
                         Label("Profil", systemImage: "person.crop.circle")

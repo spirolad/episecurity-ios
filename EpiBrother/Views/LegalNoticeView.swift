@@ -109,14 +109,8 @@ public struct LegalNoticeView: View {
             }
             .navigationTitle("Information & Confidentialité")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Fermer") {
-                        dismiss()
-                    }
-                }
-            }
         }
+        .interactiveDismissDisabled(true)
     }
     
     private func bulletPoint(title: String, desc: String) -> some View {

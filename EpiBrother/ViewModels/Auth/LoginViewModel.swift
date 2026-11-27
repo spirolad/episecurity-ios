@@ -23,18 +23,11 @@ public class LoginViewModel: ObservableObject {
     @Published public var regFullName = ""
     @Published public var regRole: Role = .employee
     
-    // Information légale (RGPD / CNIL)
-    @Published public var showLegalNotice = false
-    
     private let authService: AuthService
-    private let secureStorage: SecureStorageService
-    
     public init(
-        authService: AuthService = AuthService.shared,
-        secureStorage: SecureStorageService = SecureStorageService.shared
+        authService: AuthService = AuthService.shared
     ) {
         self.authService = authService
-        self.secureStorage = secureStorage
     }
     
     public func login() async {
@@ -56,11 +49,6 @@ public class LoginViewModel: ObservableObject {
         do {
             _ = try await authService.login(username: username, password: password)
             isLoading = false
-            
-            // Si l'utilisateur se connecte pour la première fois et n'a pas validé l'information légale
-            if !secureStorage.hasAcceptedLegalNotice {
-                showLegalNotice = true
-            }
         } catch let apiError as APIError {
             isLoading = false
             errorMessage = apiError.localizedDescription
@@ -102,10 +90,6 @@ public class LoginViewModel: ObservableObject {
             )
             isLoading = false
             showRegisterSheet = false
-            
-            if !secureStorage.hasAcceptedLegalNotice {
-                showLegalNotice = true
-            }
         } catch let apiError as APIError {
             isLoading = false
             errorMessage = apiError.localizedDescription

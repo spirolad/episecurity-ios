@@ -77,14 +77,18 @@ public class MessageService {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Destinataire introuvable avec l'id: " + request.getRecipientId()));
         }
 
-        if (sender.getRole() == RoleType.EMPLOYEE
-                && (recipient == null
-                || recipient.getRole() != RoleType.EMPLOYEE
-                || recipient.getManager() == null
-                || sender.getManager() == null
-                || !recipient.getManager().getId().equals(sender.getManager().getId()))) {
+        boolean employeeCanContactRecipient = recipient != null
+                && (recipient.getRole() == RoleType.ADMIN
+                || (recipient.getRole() == RoleType.MANAGER
+                && sender.getManager() != null
+                && recipient.getId().equals(sender.getManager().getId()))
+                || (recipient.getRole() == RoleType.EMPLOYEE
+                && recipient.getManager() != null
+                && sender.getManager() != null
+                && recipient.getManager().getId().equals(sender.getManager().getId())));
+        if (sender.getRole() == RoleType.EMPLOYEE && !employeeCanContactRecipient) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,
-                    "Vous ne pouvez envoyer un message qu'à un collègue affecté au même manager.");
+                    "Vous ne pouvez envoyer un message qu'à un collègue de votre équipe, à votre manager ou à un administrateur.");
         }
 
         // 1. Sauvegarde du message
@@ -92,16 +96,38 @@ public class MessageService {
         Message savedMessage = messageRepository.save(message);
         log.info("Message id={} enregistré avec succès (expéditeur: {})", savedMessage.getId(), sender.getUsername());
 
-        // 2. Analyse IA du message (vérification présence 'Epita' ou modèle NLP)
-        AiAnalysisResult analysisResult = aiAnalysisService.analyze(savedMessage.getContent());
+        // Le texte peut être chiffré côté client. Le frontend fournit donc le résultat
+        // de l'analyse effectuée avant chiffrement.
+        AiAnalysisResult analysisResult = request.isFlaggedByAi()
+                ? AiAnalysisResult.flagged(
+                        request.getAnalysisReason(),
+                        request.getAnalysisSeverity(),
+                        0.95)
+                : aiAnalysisService.analyze(savedMessage.getContent());
 
-        // 3. Si l'IA détecte une infraction, créer automatiquement un signalement pour les managers
         boolean flagged = analysisResult.isFlagged();
         if (flagged) {
+            String reason = request.isFlaggedByAi()
+                    ? request.getAnalysisReason()
+                    : analysisResult.getReason();
+            if (reason == null || reason.isBlank()) {
+                reason = "Analyse IA côté client : comportement potentiellement problématique détecté";
+            }
+
+            String severity = request.isFlaggedByAi()
+                    ? request.getAnalysisSeverity()
+                    : analysisResult.getSeverity();
+            if (!"HIGH".equalsIgnoreCase(severity) && !"MEDIUM".equalsIgnoreCase(severity)
+                    && !"LOW".equalsIgnoreCase(severity)) {
+                severity = "HIGH";
+            } else {
+                severity = severity.toUpperCase();
+            }
+
             Signalement signalement = new Signalement(
                     savedMessage,
-                    analysisResult.getReason(),
-                    analysisResult.getSeverity(),
+                    reason,
+                    severity,
                     "PENDING"
             );
             Signalement savedSignalement = signalementRepository.save(signalement);

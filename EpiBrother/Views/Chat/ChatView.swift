@@ -10,7 +10,6 @@ import SwiftUI
 public struct ChatView: View {
     @StateObject private var viewModel: ChatViewModel
     @StateObject private var authService = AuthService.shared
-    @State private var showingInfoAlert = false
     
     public init(contact: User) {
         _viewModel = StateObject(wrappedValue: ChatViewModel(contact: contact))
@@ -104,16 +103,6 @@ public struct ChatView: View {
                     }
                 }
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    showingInfoAlert = true
-                }) {
-                    Image(systemName: "info.circle")
-                }
-            }
-        }
-        .sheet(isPresented: $showingInfoAlert) {
-            LegalNoticeView()
         }
         .task {
             await viewModel.loadMessages()

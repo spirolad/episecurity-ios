@@ -128,11 +128,21 @@ public class UserService {
         }
 
         if (current.getManager() == null) {
-            return List.of();
+            return userRepository.findAll().stream()
+                    .filter(user -> user.getRole() == RoleType.ADMIN)
+                    .map(UserResponse::fromEntity)
+                    .collect(Collectors.toList());
         }
 
-        return userRepository.findByManagerId(current.getManager().getId()).stream()
+        List<User> contacts = userRepository.findAll().stream()
+                .filter(user -> user.getRole() == RoleType.ADMIN
+                        || user.getId().equals(current.getManager().getId()))
+                .collect(Collectors.toList());
+        contacts.addAll(userRepository.findByManagerId(current.getManager().getId()).stream()
                 .filter(user -> !user.getId().equals(current.getId()))
+                .toList());
+
+        return contacts.stream()
                 .map(UserResponse::fromEntity)
                 .collect(Collectors.toList());
     }
